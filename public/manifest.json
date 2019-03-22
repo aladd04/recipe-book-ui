@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Recipes",
+  "name": "KatieMae's Recipe Book",
   "icons": [
     {
       "src": "favicon.ico",
