@@ -1,12 +1,13 @@
 import React from "react";
-import Button from "@material-ui/core/Button"
+import { Grid } from "@material-ui/core";
+import { Menu } from "./MenuComponent/Menu";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Button variant="contained" color="primary">
-        Hello World
-      </Button>
-    );
-  }
+export default function App() {
+  return (
+    <Grid container spacing={24}>
+      <Grid item xs={12}>
+        <Menu />
+      </Grid>
+    </Grid>
+  );
 }
