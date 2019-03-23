@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AppBar, Toolbar, IconButton, Typography, List, ListItem, ListItemIcon, ListItemText, Drawer } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import MenuIcon from '@material-ui/icons/Menu';
 import "./menu.css";
 
@@ -8,7 +9,7 @@ export function Menu() {
 
   const menuActions = [{
       text: "Recipes",
-      url: "/recipes",
+      url: "/",
       icon: <div>ICON HERE</div>
     }, {
       text: "Login",
@@ -26,12 +27,14 @@ export function Menu() {
       <Drawer open={isOpenDrawer} onClose={toggleDrawerOpen}>
         <List>
           {menuActions.map(m => (
-            <ListItem button key={m.text}>
-              <ListItemIcon>
-                {m.icon}
-              </ListItemIcon>
-              <ListItemText primary={m.text} />
-            </ListItem>
+            <Link key={m.text} to={m.url} onClick={toggleDrawerOpen}>
+              <ListItem button>
+                <ListItemIcon>
+                  {m.icon}
+                </ListItemIcon>
+                <ListItemText primary={m.text} />
+              </ListItem>
+            </Link>
           ))}
         </List>
       </Drawer>
