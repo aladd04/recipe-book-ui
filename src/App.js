@@ -1,12 +1,33 @@
-import React from "react";
-import Button from "@material-ui/core/Button"
+import { Menu } from "./Layout/Menu";
+import Footer from "./Layout/Footer";
+import { Recipe } from "./Recipe/Recipe";
+import { Login } from "./User/Login";
+import { SignUp } from "./User/SignUp";
+import { Settings } from "./User/Settings";
+import { SignOut } from "./User/SignOut";
+import { RouteNotFound } from "./Helpers/RouteNotFound";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Button variant="contained" color="primary">
-        Hello World
-      </Button>
-    );
-  }
+import "typeface-roboto";
+import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <CssBaseline />
+      <Menu signedIn={false} />
+      <main id="main-content">
+        <Switch>
+          <Route exact path="/" component={Recipe} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/signout" component={SignOut} />
+          <Route component={RouteNotFound} />
+        </Switch>
+      </main>
+      <Footer />
+    </BrowserRouter>
+  );
 }

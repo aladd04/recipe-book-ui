@@ -1,0 +1,13 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main#main-content {
+  max-width: 1170px;
+  margin: auto;
+  padding: 24px 36px;
+  width: 100%;
+  flex-grow: 1;
+}
