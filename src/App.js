@@ -1,6 +1,11 @@
-import { Menu } from "./MenuComponent/Menu";
-import { RecipeList } from "./RecipeComponent/RecipeList";
-import { Login } from "./UserComponent/Login";
+import { Menu } from "./Layout/Menu";
+import Footer from "./Layout/Footer";
+import { Recipe } from "./Recipe/Recipe";
+import { Login } from "./User/Login";
+import { SignUp } from "./User/SignUp";
+import { Settings } from "./User/Settings";
+import { SignOut } from "./User/SignOut";
+import { RouteNotFound } from "./Helpers/RouteNotFound";
 
 import "typeface-roboto";
 import React from "react";
@@ -9,15 +14,20 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 export default function App() {
   return (
-    <React.Fragment>
+    <BrowserRouter>
       <CssBaseline />
-      <BrowserRouter>
-        <Menu />
+      <Menu signedIn={false} />
+      <main id="main-content">
         <Switch>
-          <Route exact path="/" component={RecipeList} />
+          <Route exact path="/" component={Recipe} />
           <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/signout" component={SignOut} />
+          <Route component={RouteNotFound} />
         </Switch>
-      </BrowserRouter>
-    </React.Fragment>
+      </main>
+      <Footer />
+    </BrowserRouter>
   );
 }

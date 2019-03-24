@@ -2,8 +2,8 @@ import React from "react";
 
 export function Login() {
   return (
-    <div>
+    <React.Fragment>
       Login
-    </div>
+    </React.Fragment>
   );
 }
