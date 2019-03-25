@@ -11,12 +11,14 @@ function Footer(props) {
       <Typography
         variant="subtitle1"
         align="center"
-        color="textSecondary"
+        color="inherit"
         component="p">
         <span>
-          {`© ${today.getFullYear()} | Andrew Ladd | `}
+          {`© ${today.getFullYear()} Andrew Ladd `}
         </span>
-        <Link href="mailto:aladd04@gmail.com">
+        <Link
+          href="mailto:aladd04@gmail.com"
+          style={{ color: "#9e9e9e" }}>
           Contact
         </Link>
       </Typography>
@@ -27,7 +29,8 @@ function Footer(props) {
 function FooterStyles(theme) {
   return {
     footerContainer: {
-      backgroundColor: theme.palette.background.paper,
+      backgroundColor: "#424242",
+      color: "#fff",
       marginTop: theme.spacing.unit * 4,
       padding: `${theme.spacing.unit * 3}px 0`,
       boxShadow: "0 -2px 2px 0 rgba(0, 0, 0, .3)"
