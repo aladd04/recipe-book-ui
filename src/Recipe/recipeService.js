@@ -1,14 +1,14 @@
 function getAllRecipes() {
   return [
-    {
-      "Id": 2177,
-      "Name": "Copy",
-      "Description": "Copy",
-      "Ingredients": "Copy",
-      "Instructions": "Copy",
-      "OwnerName": "Copy",
-      "UpdateDate": "2018-03-21T12:44:16.1395825"
-    },
+    // {
+    //   "Id": 2177,
+    //   "Name": "Copy",
+    //   "Description": "Copy",
+    //   "Ingredients": "Copy",
+    //   "Instructions": "Copy",
+    //   "OwnerName": "Copy",
+    //   "UpdateDate": "2018-03-21T12:44:16.1395825"
+    // },
     {
       "Id": 217,
       "Name": "1 Pan Salmon and Asparagus",

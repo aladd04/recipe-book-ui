@@ -1,6 +1,6 @@
 import { Menu } from "./Layout/Menu";
 import Footer from "./Layout/Footer";
-import { Recipe } from "./Recipe/Recipe";
+import { RecipeGridFilterable } from "./Recipe/RecipeGridFilterable";
 import { Login } from "./User/Login";
 import { SignUp } from "./User/SignUp";
 import { Settings } from "./User/Settings";
@@ -19,7 +19,7 @@ export default function App() {
       <Menu signedIn={false} />
       <main id="main-content">
         <Switch>
-          <Route exact path="/" component={Recipe} />
+          <Route exact path="/" component={RecipeGridFilterable} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/settings" component={Settings} />
