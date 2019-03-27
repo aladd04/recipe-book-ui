@@ -1,22 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Typography } from "@material-ui/core";
 
 export function Paginator(props) {
-  function decrementPageNumber() {
-    const newPageNumber = Math.max(0, props.pageNumber - 1);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [startNumber, setStartNumber] = useState(0);
+  const [endNumber, setEndNumber] = useState(0);
 
-    props.handleNewPageNumber(newPageNumber);
+  useEffect(handlePageChange, [pageNumber, props.pageSize]);
+
+  useEffect(() => {
+    const pageChangeWillNotBeHandled = pageNumber === 0;
+
+    setPageNumber(0);
+    
+    if (pageChangeWillNotBeHandled) {
+      handlePageChange();
+    }
+  }, [props.data]);
+
+  function handlePageChange() {
+    const pagingStartIndex = pageNumber * props.pageSize;
+    const pagingEndIndex = 
+      Math.min(props.data.length, pagingStartIndex + props.pageSize);
+
+    setStartNumber(pagingStartIndex + 1);
+    setEndNumber(pagingEndIndex);
+
+    props.handlePageChange(props.data.slice(pagingStartIndex, pagingEndIndex));
+  }
+
+  function decrementPageNumber() {
+    const newPageNumber = Math.max(0, pageNumber - 1);
+
+    setPageNumber(newPageNumber);
   }
 
   function incrementPageNumber() {
-    let newPageNumber = props.pageNumber + 1;
-    const possibleStartingPageIndex = newPageNumber * props.pageSize;
+    const maxPageNumber = getMaxPageNumber() - 1;
+    const newPageNumber 
+      = pageNumber >= maxPageNumber ? maxPageNumber : pageNumber + 1;
 
-    if (possibleStartingPageIndex >= props.matchingCount) {
-      newPageNumber--;
-    }
+    setPageNumber(newPageNumber);
+  }
 
-    props.handleNewPageNumber(newPageNumber);
+  function getMaxPageNumber() {
+    return Math.ceil(props.data.length / props.pageSize);
   }
   
   return (
@@ -27,15 +55,14 @@ export function Paginator(props) {
       <Button onClick={incrementPageNumber}>
         Next page
       </Button>
-      <Button onClick={props.handleReset}>
-        Reset
-      </Button>
       <Typography>
-        Showing {props.startNumber} - {props.endNumber}
-        &nbsp;of {props.matchingCount}
+        Showing {startNumber} - {endNumber} of {props.data.length}
       </Typography>
       <Typography>
-        {props.allCount} total
+        On page {pageNumber + 1} of {getMaxPageNumber()} pages
+      </Typography>
+      <Typography>
+        {props.masterDataCount} total
       </Typography>
     </React.Fragment>
   );
