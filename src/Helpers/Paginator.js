@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Typography, Tooltip, IconButton } from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 export function Paginator(props) {
   const [pageNumber, setPageNumber] = useState(0);
@@ -47,23 +49,29 @@ export function Paginator(props) {
     return Math.ceil(props.dataCount / props.pageSize);
   }
   
+  const maxPageNumber = getMaxPageNumber();
+  const currentPageNumber = maxPageNumber === 0 ? 0 : pageNumber + 1;
+
   return (
-    <React.Fragment>
-      <Button onClick={decrementPageNumber}>
-        Prev page
-      </Button>
-      <Button onClick={incrementPageNumber}>
-        Next page
-      </Button>
-      <Typography>
-        Showing {startNumber} - {endNumber} of {props.dataCount}
+    <div className="rb-paginator">
+      <Tooltip title="Previous Page" placement="left">
+        <IconButton onClick={decrementPageNumber}>
+          <ArrowBackIcon />
+        </IconButton>
+      </Tooltip>
+      <Typography variant="caption" className="rb-paginator__help-text">
+        <span>
+          Showing <b>{startNumber} - {endNumber}</b> of <b>{props.dataCount}</b>
+        </span>
+        <span>
+          Page <b>{currentPageNumber}</b> of <b>{maxPageNumber}</b>
+        </span>
       </Typography>
-      <Typography>
-        On page {getMaxPageNumber() === 0 ? 0 : pageNumber + 1} of {getMaxPageNumber()} pages
-      </Typography>
-      <Typography>
-        {props.masterDataCount} total
-      </Typography>
-    </React.Fragment>
+      <Tooltip title="Next Page" placement="right">
+        <IconButton onClick={incrementPageNumber}>
+          <ArrowForwardIcon />
+        </IconButton>
+      </Tooltip>
+    </div>
   );
 }

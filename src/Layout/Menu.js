@@ -48,6 +48,7 @@ export function Menu(props) {
   return (
     <React.Fragment>
       <DrawerNavigationList
+        header="Recipe Book"
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}

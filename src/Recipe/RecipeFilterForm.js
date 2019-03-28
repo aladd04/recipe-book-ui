@@ -1,51 +1,39 @@
-import React, { useState, useLayoutEffect } from "react";
-import ReactDOM from "react-dom";
-import { TextField, FormControl, InputLabel, Select, OutlinedInput } from "@material-ui/core";
+import React, { useState } from "react";
+import { TextField, Typography, Divider, Tooltip, IconButton, Collapse } from "@material-ui/core";
+import FilterListIcon from "@material-ui/icons/FilterList";
 
 export function RecipeFilterForm(props) {
-  let sortByLabelRef;
-
-  const [sortByLabelWidth, setSortByLabelWidth] = useState(0);
-
-  useLayoutEffect(() => {
-    setSortByLabelWidth(ReactDOM.findDOMNode(sortByLabelRef).offsetWidth);
-  });
-
-  function handleSortByChange(e) {
-    props.handleSortByChange(e.target.value);
-  }
+  const [isFilterShown, setIsFilterShown] = useState(false);
 
   function handleSearchQueryChange(e) {
     props.handleSearchQueryChange(e.target.value);
   }
 
+  function toggleFilterVisibility() {
+    setIsFilterShown(!isFilterShown);
+  }
+
   return (
     <React.Fragment>
-      <FormControl variant="outlined">
-        <InputLabel htmlFor="sort-by"
-          ref={ref => {
-            sortByLabelRef = ref;
-          }}>
-          Sort By
-        </InputLabel>
-        <Select
-          native
-          value={props.sortBy}
-          onChange={handleSortByChange}
-          input={
-            <OutlinedInput labelWidth={sortByLabelWidth} id="sort-by" />}>
-          <option value=""></option>
-          <option value="desc">Descending</option>
-        </Select>
-      </FormControl>
-      <FormControl variant="outlined">
+      <div className="rb-recipe-filter-header">
+        <Tooltip title="Filter Recipes" placement="left">
+          <IconButton onClick={toggleFilterVisibility}>
+            <FilterListIcon />
+          </IconButton>
+        </Tooltip>
+        <Typography variant="subtitle1">
+          Filter Recipes
+        </Typography>
+      </div>
+      <Collapse in={isFilterShown}>
+        <Divider />
         <TextField
           value={props.nameQuery}
           onChange={handleSearchQueryChange}
           label="Recipe Name"
           margin="normal"
           variant="outlined" />
-      </FormControl>
+      </Collapse>
     </React.Fragment>
   );
 }

@@ -11,3 +11,26 @@ main#main-content {
   width: 100%;
   flex-grow: 1;
 }
+
+.rb-no-recipe-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rb-recipe-filter-header {
+  display: flex;
+  align-items: center;
+}
+
+.rb-paginator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rb-paginator .rb-paginator__help-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,17 +1,15 @@
 import { PageHeader } from "../Helpers/PageHeader";
 import { Paginator } from "../Helpers/Paginator";
+import { RecipeFilterForm } from "./RecipeFilterForm";
 import { RecipeCardMini } from "./RecipeCardMini";
 import { getAllRecipes } from "./recipeService";
-import "./recipe.css";
 
 import React, { useState, useEffect } from "react";
-import { Grid, Paper, Tooltip, IconButton } from "@material-ui/core";
-import FilterListIcon from "@material-ui/icons/FilterList";
-import { RecipeFilterForm } from "./RecipeFilterForm";
+import { Grid, Paper, Typography } from "@material-ui/core";
+import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function RecipeGridFilterable() {
   const [nameQuery, setNameQuery] = useState("");
-  const [sortBy, setSortBy] = useState("");
   const [allRecipes] = useState(() => { return getAllRecipes(); });
   const [matchingRecipes, setMatchingRecipes] = useState(allRecipes);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
@@ -26,14 +24,10 @@ export function RecipeGridFilterable() {
     }
 
     setMatchingRecipes(workingRecipes);
-  }, [nameQuery, sortBy]);
+  }, [nameQuery]);
 
   function handleSearchQueryChange(newNameQuery) {
     setNameQuery(newNameQuery);
-  }
-
-  function handleSortByChange(newSortBy) {
-    setSortBy(newSortBy);
   }
 
   function handlePageNumberChange(newStartIndex, newEndIndex) {
@@ -43,35 +37,32 @@ export function RecipeGridFilterable() {
   return (
     <React.Fragment>
       <PageHeader text="Recipes" />
-      <Tooltip title="Filter">
-        <IconButton>
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip>
       <Grid container spacing={24}>
         <Grid item xs={12}>
-          <Paper style={{ padding: 24 }}>
+          <Paper style={{ padding: 12 }}>
             <RecipeFilterForm
-              sortBy={sortBy}
               nameQuery={nameQuery}
-              handleSortByChange={handleSortByChange}
               handleSearchQueryChange={handleSearchQueryChange} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper style={{ padding: 24 }}>
-            <Paginator
-              pageSize={6}
-              dataCount={matchingRecipes.length}
-              masterDataCount={allRecipes.length}
-              handlePageChange={handlePageNumberChange} />
-          </Paper>
+          <Paginator
+            pageSize={6}
+            dataCount={matchingRecipes.length}
+            handlePageChange={handlePageNumberChange} />
         </Grid>
-        {displayedRecipes.map(recipe => (
+        {displayedRecipes.length > 0 ? displayedRecipes.map(recipe => (
           <Grid item md={4} sm={6} xs={12} key={recipe.Id}>
             <RecipeCardMini recipe={recipe} />
           </Grid>
-        ))}
+        )) : (
+          <Grid item xs={12} className="rb-no-recipe-results-container">
+            <MoodBadIcon fontSize="large" />
+            <Typography variant="subtitle1">
+              Oh no! It looks like that food doesn't exist!
+            </Typography>
+          </Grid>
+        )}
       </Grid>
     </React.Fragment>
   );
