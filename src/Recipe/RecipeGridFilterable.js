@@ -12,9 +12,7 @@ import { RecipeFilterForm } from "./RecipeFilterForm";
 export function RecipeGridFilterable() {
   const [nameQuery, setNameQuery] = useState("");
   const [sortBy, setSortBy] = useState("");
-  const [allRecipes] = useState(() => {
-    return getAllRecipes();
-  });
+  const [allRecipes] = useState(() => { return getAllRecipes(); });
   const [matchingRecipes, setMatchingRecipes] = useState(allRecipes);
   const [displayedRecipes, setDisplayedRecipes] = useState([]);
 
@@ -38,8 +36,8 @@ export function RecipeGridFilterable() {
     setSortBy(newSortBy);
   }
 
-  function handlePageNumberChange(newDisplayData) {
-    setDisplayedRecipes(newDisplayData);
+  function handlePageNumberChange(newStartIndex, newEndIndex) {
+    setDisplayedRecipes(matchingRecipes.slice(newStartIndex, newEndIndex));
   }
 
   return (
@@ -64,7 +62,7 @@ export function RecipeGridFilterable() {
           <Paper style={{ padding: 24 }}>
             <Paginator
               pageSize={6}
-              data={matchingRecipes}
+              dataCount={matchingRecipes.length}
               masterDataCount={allRecipes.length}
               handlePageChange={handlePageNumberChange} />
           </Paper>

@@ -12,21 +12,20 @@ export function Paginator(props) {
     const pageChangeWillNotBeHandled = pageNumber === 0;
 
     setPageNumber(0);
-    
+
     if (pageChangeWillNotBeHandled) {
       handlePageChange();
     }
-  }, [props.data]);
+  }, [props.dataCount]);
 
   function handlePageChange() {
     const pagingStartIndex = pageNumber * props.pageSize;
-    const pagingEndIndex = 
-      Math.min(props.data.length, pagingStartIndex + props.pageSize);
+    const pagingEndIndex = Math.min(props.dataCount, pagingStartIndex + props.pageSize);
 
-    setStartNumber(pagingStartIndex + 1);
+    setStartNumber(pagingEndIndex === 0 ? 0 : pagingStartIndex + 1);
     setEndNumber(pagingEndIndex);
 
-    props.handlePageChange(props.data.slice(pagingStartIndex, pagingEndIndex));
+    props.handlePageChange(pagingStartIndex, pagingEndIndex);
   }
 
   function decrementPageNumber() {
@@ -37,14 +36,15 @@ export function Paginator(props) {
 
   function incrementPageNumber() {
     const maxPageNumber = getMaxPageNumber() - 1;
-    const newPageNumber 
-      = pageNumber >= maxPageNumber ? maxPageNumber : pageNumber + 1;
+    const newPageNumber = pageNumber >= maxPageNumber
+      ? maxPageNumber
+      : pageNumber + 1;
 
     setPageNumber(newPageNumber);
   }
 
   function getMaxPageNumber() {
-    return Math.ceil(props.data.length / props.pageSize);
+    return Math.ceil(props.dataCount / props.pageSize);
   }
   
   return (
@@ -56,10 +56,10 @@ export function Paginator(props) {
         Next page
       </Button>
       <Typography>
-        Showing {startNumber} - {endNumber} of {props.data.length}
+        Showing {startNumber} - {endNumber} of {props.dataCount}
       </Typography>
       <Typography>
-        On page {pageNumber + 1} of {getMaxPageNumber()} pages
+        On page {getMaxPageNumber() === 0 ? 0 : pageNumber + 1} of {getMaxPageNumber()} pages
       </Typography>
       <Typography>
         {props.masterDataCount} total
