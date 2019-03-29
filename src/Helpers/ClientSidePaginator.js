@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Typography, Tooltip, IconButton } from "@material-ui/core";
+import React, {
+  useState,
+  useEffect
+} from "react";
+import {
+  Typography,
+  Tooltip,
+  IconButton
+} from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
-export function Paginator(props) {
+export function ClientSidePaginator(props) {
   const [pageNumber, setPageNumber] = useState(0);
   const [startNumber, setStartNumber] = useState(0);
   const [endNumber, setEndNumber] = useState(0);
@@ -22,7 +29,9 @@ export function Paginator(props) {
 
   function handlePageChange() {
     const pagingStartIndex = pageNumber * props.pageSize;
-    const pagingEndIndex = Math.min(props.dataCount, pagingStartIndex + props.pageSize);
+    const pagingEndIndex = Math.min(
+      props.dataCount,
+      pagingStartIndex + props.pageSize);
 
     setStartNumber(pagingEndIndex === 0 ? 0 : pagingStartIndex + 1);
     setEndNumber(pagingEndIndex);
@@ -59,9 +68,10 @@ export function Paginator(props) {
           <ArrowBackIcon />
         </IconButton>
       </Tooltip>
-      <Typography variant="caption" className="rb-paginator__help-text">
+      <Typography variant="caption" className="rb-paginator-help-text">
         <span>
-          Showing <b>{startNumber} - {endNumber}</b> of <b>{props.dataCount}</b>
+          Showing <b>{startNumber}</b> - <b>{endNumber}</b>
+          &nbsp;of <b>{props.dataCount}</b>
         </span>
         <span>
           Page <b>{currentPageNumber}</b> of <b>{maxPageNumber}</b>

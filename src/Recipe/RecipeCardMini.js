@@ -1,28 +1,31 @@
 import React from "react";
-import { Card, CardHeader, CardContent, CardActions, Button, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Button,
+  Typography
+} from "@material-ui/core";
 
 export function RecipeCardMini(props) {
-  function getSubHeaderText() {
-    const dateString = new Intl.DateTimeFormat("en-US", {
-      timeZone: "America/New_York",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: "true"
-    }).format(new Date(props.recipe.UpdateDate));
-
-    return `${props.recipe.OwnerName} - ${dateString}`;
-  }
+  const dateString = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: "true"
+  }).format(new Date(props.recipe.UpdateDate));
 
   return (
     <Card>
       <CardHeader
         title={props.recipe.Name}
-        subheader={getSubHeaderText()} />
+        subheader={`${props.recipe.OwnerName} - ${dateString}`} />
       <CardContent>
-        <Typography>
+        <Typography variant="body1">
           {props.recipe.Description}
         </Typography>
       </CardContent>

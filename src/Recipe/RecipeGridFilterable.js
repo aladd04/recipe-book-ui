@@ -1,11 +1,18 @@
 import { PageHeader } from "../Helpers/PageHeader";
-import { Paginator } from "../Helpers/Paginator";
+import { ClientSidePaginator } from "../Helpers/ClientSidePaginator";
 import { RecipeFilterForm } from "./RecipeFilterForm";
 import { RecipeCardMini } from "./RecipeCardMini";
 import { getAllRecipes } from "./recipeService";
 
-import React, { useState, useEffect } from "react";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import React, {
+  useState,
+  useEffect
+} from "react";
+import {
+  Grid,
+  Paper,
+  Typography
+} from "@material-ui/core";
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function RecipeGridFilterable() {
@@ -18,8 +25,8 @@ export function RecipeGridFilterable() {
     let workingRecipes = allRecipes;
 
     if (nameQuery !== "") {
-      workingRecipes = workingRecipes.filter(recipe => {
-        return recipe.Name.toLowerCase().includes(nameQuery.toLowerCase());
+      workingRecipes = workingRecipes.filter(r => {
+        return r.Name.toLowerCase().includes(nameQuery.toLowerCase());
       });
     }
 
@@ -46,14 +53,14 @@ export function RecipeGridFilterable() {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paginator
+          <ClientSidePaginator
             pageSize={6}
             dataCount={matchingRecipes.length}
             handlePageChange={handlePageNumberChange} />
         </Grid>
-        {displayedRecipes.length > 0 ? displayedRecipes.map(recipe => (
-          <Grid item md={4} sm={6} xs={12} key={recipe.Id}>
-            <RecipeCardMini recipe={recipe} />
+        {displayedRecipes.length > 0 ? displayedRecipes.map(r => (
+          <Grid item md={4} sm={6} xs={12} key={r.Id}>
+            <RecipeCardMini recipe={r} />
           </Grid>
         )) : (
           <Grid item xs={12} className="rb-no-recipe-results-container">

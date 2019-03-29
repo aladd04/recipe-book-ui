@@ -1,7 +1,14 @@
-import { DrawerNavigationList } from "./DrawerNavigationList"
+import { NavigationDrawer } from "./NavigationDrawer"
 
-import React, { useState } from "react";
-import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
+import React, {
+  useState
+} from "react";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import FastFoodIcon from "@material-ui/icons/Fastfood";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
@@ -47,7 +54,7 @@ export function Menu(props) {
 
   return (
     <React.Fragment>
-      <DrawerNavigationList
+      <NavigationDrawer
         header="Recipe Book"
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}

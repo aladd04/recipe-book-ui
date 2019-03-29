@@ -29,7 +29,7 @@ main#main-content {
   justify-content: space-between;
 }
 
-.rb-paginator .rb-paginator__help-text {
+.rb-paginator .rb-paginator-help-text {
   display: flex;
   flex-direction: column;
   align-items: center;
