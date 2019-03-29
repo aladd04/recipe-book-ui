@@ -55,7 +55,7 @@ export function RecipeGridFilterable() {
         <Grid item xs={12}>
           <ClientSidePaginator
             pageSize={6}
-            dataCount={matchingRecipes.length}
+            data={matchingRecipes}
             handlePageChange={handlePageNumberChange} />
         </Grid>
         {displayedRecipes.length > 0 ? displayedRecipes.map(r => (

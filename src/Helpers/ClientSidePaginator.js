@@ -15,22 +15,19 @@ export function ClientSidePaginator(props) {
   const [startNumber, setStartNumber] = useState(0);
   const [endNumber, setEndNumber] = useState(0);
 
-  useEffect(handlePageChange, [pageNumber, props.pageSize]);
+  useEffect(() => {
+    handlePageChange();
+  }, [pageNumber, props.pageSize]);
 
   useEffect(() => {
-    const pageChangeWillNotBeHandled = pageNumber === 0;
-
     setPageNumber(0);
-
-    if (pageChangeWillNotBeHandled) {
-      handlePageChange();
-    }
-  }, [props.dataCount]);
+    handlePageChange();
+  }, [props.data]);
 
   function handlePageChange() {
     const pagingStartIndex = pageNumber * props.pageSize;
     const pagingEndIndex = Math.min(
-      props.dataCount,
+      props.data.length,
       pagingStartIndex + props.pageSize);
 
     setStartNumber(pagingEndIndex === 0 ? 0 : pagingStartIndex + 1);
@@ -40,9 +37,7 @@ export function ClientSidePaginator(props) {
   }
 
   function decrementPageNumber() {
-    const newPageNumber = Math.max(0, pageNumber - 1);
-
-    setPageNumber(newPageNumber);
+    setPageNumber(Math.max(0, pageNumber - 1));
   }
 
   function incrementPageNumber() {
@@ -55,7 +50,7 @@ export function ClientSidePaginator(props) {
   }
 
   function getMaxPageNumber() {
-    return Math.ceil(props.dataCount / props.pageSize);
+    return Math.ceil(props.data.length / props.pageSize);
   }
   
   const maxPageNumber = getMaxPageNumber();
@@ -71,7 +66,7 @@ export function ClientSidePaginator(props) {
       <Typography variant="caption" className="rb-paginator-help-text">
         <span>
           Showing <b>{startNumber}</b> - <b>{endNumber}</b>
-          &nbsp;of <b>{props.dataCount}</b>
+          &nbsp;of <b>{props.data.length}</b>
         </span>
         <span>
           Page <b>{currentPageNumber}</b> of <b>{maxPageNumber}</b>
