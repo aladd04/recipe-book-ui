@@ -1,3 +1,4 @@
+import useClientSidePagination from "../Hooks/useClientSidePagination";
 import { PageHeader } from "../Helpers/PageHeader";
 import { ClientSidePaginator } from "../Helpers/ClientSidePaginator";
 import { RecipeFilterForm } from "./RecipeFilterForm";
@@ -16,13 +17,13 @@ import {
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function RecipeGridFilterable() {
-  const [nameQuery, setNameQuery] = useState("");
   const [allRecipes] = useState(() => { return getAllRecipes(); });
-  const [matchingRecipes, setMatchingRecipes] = useState(allRecipes);
-  const [displayedRecipes, setDisplayedRecipes] = useState([]);
+  const [nameQuery, setNameQuery] = useState("");
+  const [pageSize] = useState(6);
+  const paginator = useClientSidePagination(pageSize);
 
   useEffect(() => {
-    let workingRecipes = allRecipes;
+    let workingRecipes = [...allRecipes];
 
     if (nameQuery !== "") {
       workingRecipes = workingRecipes.filter(r => {
@@ -30,16 +31,14 @@ export function RecipeGridFilterable() {
       });
     }
 
-    setMatchingRecipes(workingRecipes);
+    paginator.resetData(workingRecipes);
   }, [nameQuery]);
 
   function handleSearchQueryChange(newNameQuery) {
     setNameQuery(newNameQuery);
   }
 
-  function handlePageNumberChange(newStartIndex, newEndIndex) {
-    setDisplayedRecipes(matchingRecipes.slice(newStartIndex, newEndIndex));
-  }
+  const recipesToDisplay = paginator.getDataToDisplay();
 
   return (
     <React.Fragment>
@@ -54,11 +53,15 @@ export function RecipeGridFilterable() {
         </Grid>
         <Grid item xs={12}>
           <ClientSidePaginator
-            pageSize={6}
-            data={matchingRecipes}
-            handlePageChange={handlePageNumberChange} />
+            decrementPageNumber={paginator.decrementPageNumber}
+            displayStartNumber={paginator.displayStartNumber}
+            displayEndNumber={paginator.displayEndNumber}
+            dataCount={paginator.dataCount}
+            currentPageNumber={paginator.pageNumber}
+            maxPageNumber={paginator.maxPageNumber}
+            incrementPageNumber={paginator.incrementPageNumber} />
         </Grid>
-        {displayedRecipes.length > 0 ? displayedRecipes.map(r => (
+        {recipesToDisplay.length > 0 ? recipesToDisplay.map(r => (
           <Grid item md={4} sm={6} xs={12} key={r.Id}>
             <RecipeCardMini recipe={r} />
           </Grid>
