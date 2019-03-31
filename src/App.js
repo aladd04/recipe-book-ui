@@ -2,6 +2,7 @@ import { Menu } from "./Layout/Menu";
 import Footer from "./Layout/Footer";
 import { RecipeGridFilterable } from "./Recipe/RecipeGridFilterable";
 import { RecipeInfo } from "./Recipe/RecipeInfo";
+import { RecipeEdit } from "./Recipe/RecipeEdit";
 import { Login } from "./User/Login";
 import { SignUp } from "./User/SignUp";
 import { Settings } from "./User/Settings";
@@ -27,6 +28,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={RecipeGridFilterable} />
           <Route exact path="/recipe/:id" component={RecipeInfo} />
+          <Route exact path="/recipe/edit/:id" component={RecipeEdit} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route path="/settings" component={Settings} />

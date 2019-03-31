@@ -10,7 +10,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 export function ClientSidePaginator(props) {
   return (
     <div className="rb-paginator">
-      <Tooltip title="Previous Page" placement="left">
+      <Tooltip title="Previous Page" placement="right">
         <IconButton onClick={props.decrementPageNumber}>
           <ArrowBackIcon />
         </IconButton>
@@ -28,7 +28,7 @@ export function ClientSidePaginator(props) {
           <b> {props.maxPageNumber}</b>
         </span>
       </Typography>
-      <Tooltip title="Next Page" placement="right">
+      <Tooltip title="Next Page" placement="left">
         <IconButton onClick={props.incrementPageNumber}>
           <ArrowForwardIcon />
         </IconButton>

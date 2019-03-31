@@ -5,7 +5,6 @@ import {
   TextField,
   Typography,
   Divider,
-  Tooltip,
   IconButton,
   Collapse
 } from "@material-ui/core";
@@ -25,11 +24,9 @@ export function RecipeFilterForm(props) {
   return (
     <React.Fragment>
       <div className="rb-recipe-filter-header">
-        <Tooltip title="Filter Recipes" placement="left">
-          <IconButton onClick={toggleFilterVisibility}>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        <IconButton onClick={toggleFilterVisibility}>
+          <FilterListIcon />
+        </IconButton>
         <Typography variant="subtitle1" style={{ paddingLeft: 5 }}>
           Filter Recipes
         </Typography>
