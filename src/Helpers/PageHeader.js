@@ -7,13 +7,10 @@ import {
 export function PageHeader(props) {
   return (
     <React.Fragment>
-      <Typography
-        variant="h4"
-        color="textSecondary"
-        style={{ marginBottom: 16 }}>
+      <Typography variant="h4" color="textSecondary">
         {props.text}
       </Typography>
-      <Divider style={{ marginBottom: 16 }} />
+      <Divider style={{ marginTop: 16, marginBottom: 16 }} />
     </React.Fragment>
   );
 }

@@ -1,3 +1,5 @@
+import { RouterLink } from "../Helpers/RouterLink";
+
 import React from "react";
 import {
   Card,
@@ -8,7 +10,7 @@ import {
   Typography
 } from "@material-ui/core";
 
-export function RecipeCardMini(props) {
+export function RecipeCardMini({ recipe }) {
   const dateString = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
     year: "numeric",
@@ -17,22 +19,24 @@ export function RecipeCardMini(props) {
     hour: "numeric",
     minute: "numeric",
     hour12: "true"
-  }).format(new Date(props.recipe.UpdateDate));
+  }).format(new Date(recipe.UpdateDate));
 
   return (
     <Card>
       <CardHeader
-        title={props.recipe.Name}
-        subheader={`${props.recipe.OwnerName} - ${dateString}`} />
+        title={recipe.Name}
+        subheader={`${recipe.OwnerName} - ${dateString}`} />
       <CardContent>
         <Typography variant="body1">
-          {props.recipe.Description}
+          {recipe.Description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
-          See More
-        </Button>
+        <RouterLink to={`/recipe/${recipe.Id}`}>
+          <Button size="small" color="primary">
+            See More
+          </Button>
+        </RouterLink>
       </CardActions>
     </Card>
   );

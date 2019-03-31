@@ -1,5 +1,6 @@
+import { RouterLink } from "../Helpers/RouterLink";
+
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 import {
   List,
   ListItem,
@@ -17,8 +18,7 @@ function NavigationDrawerList(props) {
         <RouterLink
           key={a.text}
           to={a.url}
-          onClick={props.toggleOpen}
-          style={{ textDecoration: "none" }}>
+          onClick={props.toggleOpen}>
           <ListItem button>
             <ListItemIcon>
               {a.icon}

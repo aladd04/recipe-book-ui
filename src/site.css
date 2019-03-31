@@ -7,7 +7,7 @@
 main#main-content {
   max-width: 1170px;
   margin: auto;
-  padding: 24px 36px;
+  padding: 24px;
   width: 100%;
   flex-grow: 1;
 }
@@ -33,4 +33,9 @@ main#main-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.rb-recipe-info .rb-recipe-info-body {
+  margin-left: 16px;
+  white-space: pre-wrap;
 }

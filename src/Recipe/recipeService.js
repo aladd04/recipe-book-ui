@@ -768,6 +768,13 @@ function getAllRecipes() {
   ];
 }
 
+function getRecipeById(id) {
+  return getAllRecipes().filter(r => {
+    return r.Id.toString() === id;
+  })[0];
+}
+
 module.exports = {
-  getAllRecipes
+  getAllRecipes,
+  getRecipeById
 };

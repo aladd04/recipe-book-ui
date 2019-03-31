@@ -34,7 +34,6 @@ function FooterStyles(theme) {
     footerContainer: {
       backgroundColor: "#424242",
       color: "#fff",
-      marginTop: theme.spacing.unit * 4,
       padding: `${theme.spacing.unit * 3}px 0`,
       boxShadow: `
         0px -2px 4px -1px rgba(0,0,0,0.2),
