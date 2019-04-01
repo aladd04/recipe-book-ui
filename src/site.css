@@ -5,6 +5,7 @@
 }
 
 main#main-content {
+  position: relative;
   max-width: 1170px;
   margin: auto;
   padding: 24px;

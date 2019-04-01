@@ -1,10 +1,11 @@
+import useRecipeService from "../Hooks/useRecipeService";
 import { RouterLink } from "../Helpers/RouterLink";
 import { PageHeader } from "../Helpers/PageHeader";
 import { RecipeInfoSection } from "./RecipeInfoSection";
-import { getRecipeById } from "./recipeService";
 
 import React, {
-  useState
+  useState,
+  useEffect
 } from "react";
 import {
   Paper,
@@ -12,10 +13,30 @@ import {
 } from "@material-ui/core";
 
 export function RecipeInfo(props) {
-  const [recipe] = useState(() => {
-    return getRecipeById(props.match.params.id);
-  });
+  const recipeService = useRecipeService();
+  const [isLoading, setIsLoading] = useState(true);
+  const [recipe, setRecipe] = useState({});
 
+  useEffect(() => {
+    recipeService.getRecipeById(props.match.params.id,
+      (response) => {
+        setRecipe(response.data);
+        setIsLoading(false);
+      });
+  }, []);
+
+  return (
+    <React.Fragment>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <RecipeInfoView recipe={recipe} {...props} />
+      )}
+    </React.Fragment>
+  );
+}
+
+function RecipeInfoView({ recipe, ...props }) {
   function navigateToAllRecipes() {
     props.history.goBack();
   }
@@ -26,33 +47,33 @@ export function RecipeInfo(props) {
     month: "long",
     day: "numeric",
     weekday: "long"
-  }).format(new Date(recipe.UpdateDate));
+  }).format(new Date(recipe.updateDate));
 
   const timeString = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
     hour: "numeric",
     minute: "numeric",
     hour12: "true"
-  }).format(new Date(recipe.UpdateDate));
+  }).format(new Date(recipe.updateDate));
 
   const dateTimeString = `${dateString} at ${timeString}`;
   const ownerBlurb = 
-    `${recipe.OwnerName} last updated this recipe on ${dateTimeString}`;
+    `${recipe.ownerName} last updated this recipe on ${dateTimeString}`;
 
   return (
     <React.Fragment>
-      <PageHeader text={recipe.Name} subText={ownerBlurb} />
+      <PageHeader text={recipe.name} subText={ownerBlurb} />
       <Paper style={{ padding: 12 }}>
         <RecipeInfoSection
           title="Description"
-          body={recipe.Description} />
+          body={recipe.description} />
         <RecipeInfoSection
           title="Ingredients"
-          body={recipe.Ingredients} />
+          body={recipe.ingredients} />
         <RecipeInfoSection
           title="Instructions"
-          body={recipe.Instructions} />
-        <RouterLink to={`/recipe/edit/${recipe.Id}`}>
+          body={recipe.instructions} />
+        <RouterLink to={`/recipe/edit/${recipe.id}`}>
           <Button size="small" color="primary">Edit Recipe</Button>
         </RouterLink>
         <Button size="small" color="primary" onClick={navigateToAllRecipes}>

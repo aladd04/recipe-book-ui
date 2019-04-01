@@ -19,20 +19,20 @@ export function RecipeCardMini({ recipe }) {
     hour: "numeric",
     minute: "numeric",
     hour12: "true"
-  }).format(new Date(recipe.UpdateDate));
+  }).format(new Date(recipe.updateDate));
 
   return (
     <Card>
       <CardHeader
-        title={recipe.Name}
-        subheader={`${recipe.OwnerName} - ${dateString}`} />
+        title={recipe.name}
+        subheader={`${recipe.ownerName} - ${dateString}`} />
       <CardContent>
         <Typography variant="body1">
-          {recipe.Description}
+          {recipe.description}
         </Typography>
       </CardContent>
       <CardActions>
-        <RouterLink to={`/recipe/${recipe.Id}`}>
+        <RouterLink to={`/recipe/${recipe.id}`}>
           <Button size="small" color="primary">
             See More
           </Button>

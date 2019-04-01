@@ -1,9 +1,9 @@
 import useClientSidePagination from "../Hooks/useClientSidePagination";
+import useRecipeService from "../Hooks/useRecipeService";
 import { PageHeader } from "../Helpers/PageHeader";
 import { ClientSidePaginator } from "../Helpers/ClientSidePaginator";
 import { RecipeFilterForm } from "./RecipeFilterForm";
 import { RecipeCardMini } from "./RecipeCardMini";
-import { getAllRecipes } from "./recipeService";
 
 import React, {
   useState,
@@ -17,17 +17,39 @@ import {
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function RecipeGridFilterable() {
-  const [allRecipes] = useState(() => { return getAllRecipes(); });
+  const recipeService = useRecipeService();
+  const [isLoading, setIsLoading] = useState(true);
+  const [allRecipes, setAllRecipes] = useState([]);
+
+  useEffect(() => {
+    recipeService.getAllRecipes(
+      (response) => {
+        setAllRecipes(response.data);
+        setIsLoading(false);
+      });
+  }, []);
+
+  return (
+    <React.Fragment>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <RecipeGridFilterableView allRecipes={allRecipes} />
+      )}
+    </React.Fragment>
+  );
+}
+
+function RecipeGridFilterableView({ allRecipes }) {
+  const paginator = useClientSidePagination(6);
   const [nameQuery, setNameQuery] = useState("");
-  const [pageSize] = useState(6);
-  const paginator = useClientSidePagination(pageSize);
 
   useEffect(() => {
     let workingRecipes = [...allRecipes];
 
     if (nameQuery !== "") {
       workingRecipes = workingRecipes.filter(r => {
-        return r.Name.toLowerCase().includes(nameQuery.toLowerCase());
+        return r.name.toLowerCase().includes(nameQuery.toLowerCase());
       });
     }
 
@@ -62,7 +84,7 @@ export function RecipeGridFilterable() {
             incrementPageNumber={paginator.incrementPageNumber} />
         </Grid>
         {recipesToDisplay.length > 0 ? recipesToDisplay.map(r => (
-          <Grid item md={4} sm={6} xs={12} key={r.Id}>
+          <Grid item md={4} sm={6} xs={12} key={r.id}>
             <RecipeCardMini recipe={r} />
           </Grid>
         )) : (
