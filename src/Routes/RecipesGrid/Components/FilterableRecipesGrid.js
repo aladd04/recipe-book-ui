@@ -1,9 +1,8 @@
-import useClientSidePagination from "../Hooks/useClientSidePagination";
-import useRecipeService from "../Hooks/useRecipeService";
-import { PageHeader } from "../Helpers/PageHeader";
-import { ClientSidePaginator } from "../Helpers/ClientSidePaginator";
-import { RecipeFilterForm } from "./RecipeFilterForm";
-import { RecipeCardMini } from "./RecipeCardMini";
+import useClientSidePagination from "../../../Hooks/useClientSidePagination";
+import { ClientSidePaginator } from "../../../Helpers/ClientSidePaginator";
+import { PageHeader } from "../../../Helpers/PageHeader";
+import { RecipesFilterForm } from "./RecipesFilterForm";
+import { RecipeGridCard } from "./RecipeGridCard";
 
 import React, {
   useState,
@@ -16,31 +15,7 @@ import {
 } from "@material-ui/core";
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 
-export function RecipeGridFilterable() {
-  const recipeService = useRecipeService();
-  const [isLoading, setIsLoading] = useState(true);
-  const [allRecipes, setAllRecipes] = useState([]);
-
-  useEffect(() => {
-    recipeService.getAllRecipes(
-      (response) => {
-        setAllRecipes(response.data);
-        setIsLoading(false);
-      });
-  }, []);
-
-  return (
-    <React.Fragment>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <RecipeGridFilterableView allRecipes={allRecipes} />
-      )}
-    </React.Fragment>
-  );
-}
-
-function RecipeGridFilterableView({ allRecipes }) {
+export function FilterableRecipesGrid({ allRecipes }) {
   const paginator = useClientSidePagination(6);
   const [nameQuery, setNameQuery] = useState("");
 
@@ -68,7 +43,7 @@ function RecipeGridFilterableView({ allRecipes }) {
       <Grid container spacing={24}>
         <Grid item xs={12}>
           <Paper style={{ padding: 12 }}>
-            <RecipeFilterForm
+            <RecipesFilterForm
               nameQuery={nameQuery}
               handleSearchQueryChange={handleSearchQueryChange} />
           </Paper>
@@ -85,7 +60,7 @@ function RecipeGridFilterableView({ allRecipes }) {
         </Grid>
         {recipesToDisplay.length > 0 ? recipesToDisplay.map(r => (
           <Grid item md={4} sm={6} xs={12} key={r.id}>
-            <RecipeCardMini recipe={r} />
+            <RecipeGridCard recipe={r} />
           </Grid>
         )) : (
           <Grid item xs={12} className="rb-no-recipe-results-container">

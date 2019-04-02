@@ -1,4 +1,4 @@
-import { RouterLink } from "../Helpers/RouterLink";
+import { RouterLink } from "../../../Helpers/RouterLink";
 
 import React from "react";
 import {
@@ -10,7 +10,7 @@ import {
   Typography
 } from "@material-ui/core";
 
-export function RecipeCardMini({ recipe }) {
+export function RecipeGridCard({ recipe }) {
   const dateString = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
     year: "numeric",
