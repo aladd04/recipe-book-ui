@@ -1,12 +1,12 @@
 import { Menu } from "./Layout/Menu";
 import Footer from "./Layout/Footer";
-import { RecipeGridFilterable } from "./Recipe/RecipeGridFilterable";
-import { RecipeInfo } from "./Recipe/RecipeInfo";
-import { RecipeEdit } from "./Recipe/RecipeEdit";
-import { Login } from "./User/Login";
-import { SignUp } from "./User/SignUp";
-import { Settings } from "./User/Settings";
-import { SignOut } from "./User/SignOut";
+import { RecipesGrid } from "./Routes/RecipesGrid/RecipesGrid";
+import { RecipeView } from "./Routes/RecipeView/RecipeView";
+import { RecipeEdit } from "./Routes/RecipeEdit/RecipeEdit";
+import { Login } from "./Routes/Login/Login";
+import { SignUp } from "./Routes/SignUp/SignUp";
+import { Settings } from "./Routes/Settings/Settings";
+import { SignOut } from "./Routes/SignOut/SignOut";
 import { RouteNotFound } from "./Helpers/RouteNotFound";
 
 import "typeface-roboto";
@@ -26,8 +26,8 @@ export default function App() {
       <Menu signedIn={false} />
       <main id="main-content">
         <Switch>
-          <Route exact path="/" component={RecipeGridFilterable} />
-          <Route exact path="/recipe/:id" component={RecipeInfo} />
+          <Route exact path="/" component={RecipesGrid} />
+          <Route exact path="/recipe/:id" component={RecipeView} />
           <Route exact path="/recipe/edit/:id" component={RecipeEdit} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />

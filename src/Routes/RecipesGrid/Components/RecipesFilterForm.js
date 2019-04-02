@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import FilterListIcon from "@material-ui/icons/FilterList";
 
-export function RecipeFilterForm(props) {
+export function RecipesFilterForm(props) {
   const [isFilterShown, setIsFilterShown] = useState(true);
 
   function handleSearchQueryChange(e) {

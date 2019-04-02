@@ -1,46 +1,14 @@
-import useRecipeService from "../Hooks/useRecipeService";
-import { RouterLink } from "../Helpers/RouterLink";
-import { PageHeader } from "../Helpers/PageHeader";
+import { RouterLink } from "../../../Helpers/RouterLink";
+import { PageHeader } from "../../../Helpers/PageHeader";
 import { RecipeInfoSection } from "./RecipeInfoSection";
 
-import React, {
-  useState,
-  useEffect
-} from "react";
+import React from "react";
 import {
   Paper,
   Button
 } from "@material-ui/core";
 
-export function RecipeInfo(props) {
-  const recipeService = useRecipeService();
-  const [isLoading, setIsLoading] = useState(true);
-  const [recipe, setRecipe] = useState({});
-
-  useEffect(() => {
-    recipeService.getRecipeById(props.match.params.id,
-      (response) => {
-        setRecipe(response.data);
-        setIsLoading(false);
-      });
-  }, []);
-
-  return (
-    <React.Fragment>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <RecipeInfoView recipe={recipe} {...props} />
-      )}
-    </React.Fragment>
-  );
-}
-
-function RecipeInfoView({ recipe, ...props }) {
-  function navigateToAllRecipes() {
-    props.history.goBack();
-  }
-
+export function RecipeInfo({ recipe, ...props }) {
   const dateString = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
     year: "numeric",
@@ -76,9 +44,9 @@ function RecipeInfoView({ recipe, ...props }) {
         <RouterLink to={`/recipe/edit/${recipe.id}`}>
           <Button size="small" color="primary">Edit Recipe</Button>
         </RouterLink>
-        <Button size="small" color="primary" onClick={navigateToAllRecipes}>
-          Back to Recipes
-        </Button>
+        <RouterLink to="/">
+          <Button size="small" color="primary">Back to Recipes</Button>
+        </RouterLink>
       </Paper>
     </React.Fragment>
   );
