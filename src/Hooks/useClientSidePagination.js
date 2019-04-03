@@ -27,7 +27,7 @@ export default function useClientSidePagination(pageSize) {
 
   function goToPageNumber(requestedPageNumber) {
     const maxPageNumber = getMaxPageNumber();
-    const minPageNumber = 1;
+    const minPageNumber = maxPageNumber === 0 ? 0 : 1;
 
     let newPageNumber = requestedPageNumber;
     if (newPageNumber > maxPageNumber) {
