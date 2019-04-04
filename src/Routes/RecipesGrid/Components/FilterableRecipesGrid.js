@@ -1,6 +1,5 @@
 import useClientSidePagination from "../../../Hooks/useClientSidePagination";
 import { ClientSidePaginator } from "../../../Helpers/ClientSidePaginator";
-import { PageHeader } from "../../../Helpers/PageHeader";
 import { RecipesFilterForm } from "./RecipesFilterForm";
 import { RecipeGridCard } from "./RecipeGridCard";
 
@@ -38,39 +37,36 @@ export function FilterableRecipesGrid({ allRecipes }) {
   const recipesToDisplay = paginator.getDataToDisplay();
 
   return (
-    <React.Fragment>
-      <PageHeader text="Recipes" />
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
-          <Paper style={{ padding: 12 }}>
-            <RecipesFilterForm
-              nameQuery={nameQuery}
-              handleSearchQueryChange={handleSearchQueryChange} />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <ClientSidePaginator
-            decrementPageNumber={paginator.decrementPageNumber}
-            displayStartNumber={paginator.displayStartNumber}
-            displayEndNumber={paginator.displayEndNumber}
-            dataCount={paginator.dataCount}
-            currentPageNumber={paginator.pageNumber}
-            maxPageNumber={paginator.maxPageNumber}
-            incrementPageNumber={paginator.incrementPageNumber} />
-        </Grid>
-        {recipesToDisplay.length > 0 ? recipesToDisplay.map(r => (
-          <Grid item md={4} sm={6} xs={12} key={r.id}>
-            <RecipeGridCard recipe={r} />
-          </Grid>
-        )) : (
-          <Grid item xs={12} className="rb-no-recipe-results-container">
-            <MoodBadIcon fontSize="large" />
-            <Typography variant="subtitle1">
-              Oh no! It looks like that food doesn't exist!
-            </Typography>
-          </Grid>
-        )}
+    <Grid container spacing={24}>
+      <Grid item xs={12}>
+        <Paper style={{ padding: 12 }}>
+          <RecipesFilterForm
+            nameQuery={nameQuery}
+            handleSearchQueryChange={handleSearchQueryChange} />
+        </Paper>
       </Grid>
-    </React.Fragment>
+      <Grid item xs={12}>
+        <ClientSidePaginator
+          decrementPageNumber={paginator.decrementPageNumber}
+          displayStartNumber={paginator.displayStartNumber}
+          displayEndNumber={paginator.displayEndNumber}
+          dataCount={paginator.dataCount}
+          currentPageNumber={paginator.pageNumber}
+          maxPageNumber={paginator.maxPageNumber}
+          incrementPageNumber={paginator.incrementPageNumber} />
+      </Grid>
+      {recipesToDisplay.length > 0 ? recipesToDisplay.map(r => (
+        <Grid item md={4} sm={6} xs={12} key={r.id}>
+          <RecipeGridCard recipe={r} />
+        </Grid>
+      )) : (
+        <Grid item xs={12} className="rb-no-recipe-results-container">
+          <MoodBadIcon fontSize="large" />
+          <Typography variant="subtitle1">
+            Oh no! It looks like that food doesn't exist!
+          </Typography>
+        </Grid>
+      )}
+    </Grid>
   );
 }
