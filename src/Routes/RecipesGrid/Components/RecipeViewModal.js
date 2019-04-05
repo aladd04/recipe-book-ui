@@ -9,7 +9,8 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogActions
+  DialogActions,
+  DialogTitle
 } from "@material-ui/core";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
 import PropTypes from "prop-types";
@@ -23,9 +24,9 @@ function RecipeViewModal({ recipe, ...props }) {
         onClose={props.onCloseModal}
         fullWidth={true}
         fullScreen={props.fullScreen}>
-      <DialogContent style={{ paddingBottom: 0 }}>
+      <DialogTitle disableTypography={true} style={{ paddingBottom: 0 }}>
         <PageHeader text={recipe.name} subText={ownerBlurb} />
-      </DialogContent>
+      </DialogTitle>
       <DialogContent>
         <RecipeInfo recipe={recipe} setOwnerBlurb={setOwnerBlurb} />
       </DialogContent>

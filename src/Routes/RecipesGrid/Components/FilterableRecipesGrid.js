@@ -16,6 +16,7 @@ import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function FilterableRecipesGrid({ allRecipes }) {
   const paginator = useClientSidePagination(6);
+  const [matchingRecipes, setMatchingRecipes] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
 
   useEffect(() => {
@@ -27,14 +28,32 @@ export function FilterableRecipesGrid({ allRecipes }) {
       });
     }
 
-    paginator.resetData(workingRecipes);
+    sortRecipesByName(workingRecipes);
+
+    paginator.handleNewDataReceived(workingRecipes.length);
+    setMatchingRecipes(workingRecipes);
   }, [nameQuery]);
 
   function handleSearchQueryChange(newNameQuery) {
     setNameQuery(newNameQuery);
   }
 
-  const recipesToDisplay = paginator.getDataToDisplay();
+  function sortRecipesByName(recipes) {
+    recipes.sort((a, b) => {
+      var nameA = a.name.toLowerCase();
+      var nameB = b.name.toLowerCase();
+
+      if (nameA < nameB) {
+        return -1;
+      } else if (nameA > nameB) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }
+
+  const recipesToDisplay = paginator.getDataToDisplay(matchingRecipes);
 
   return (
     <Grid container spacing={24}>

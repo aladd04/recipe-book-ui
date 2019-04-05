@@ -23,7 +23,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <CssBaseline />
-      <Menu signedIn={false} />
+      <Menu />
       <main id="main-content">
         <Switch>
           <Route exact path="/" component={RecipesGrid} />
