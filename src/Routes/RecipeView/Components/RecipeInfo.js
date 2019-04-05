@@ -1,12 +1,6 @@
-import { RouterLink } from "../../../Helpers/RouterLink";
-import { PageHeader } from "../../../Helpers/PageHeader";
 import { RecipeInfoSection } from "./RecipeInfoSection";
 
 import React from "react";
-import {
-  Paper,
-  Button
-} from "@material-ui/core";
 
 export function RecipeInfo({ recipe, ...props }) {
   const dateString = new Intl.DateTimeFormat("en-US", {
@@ -28,26 +22,19 @@ export function RecipeInfo({ recipe, ...props }) {
   const ownerBlurb = 
     `${recipe.ownerName} last updated this recipe on ${dateTimeString}`;
 
+  props.setOwnerBlurb(ownerBlurb);
+
   return (
     <React.Fragment>
-      <PageHeader text={recipe.name} subText={ownerBlurb} />
-      <Paper style={{ padding: 12 }}>
-        <RecipeInfoSection
-          title="Description"
-          body={recipe.description} />
-        <RecipeInfoSection
-          title="Ingredients"
-          body={recipe.ingredients} />
-        <RecipeInfoSection
-          title="Instructions"
-          body={recipe.instructions} />
-        <RouterLink to={`/recipe/edit/${recipe.id}`}>
-          <Button size="small" color="primary">Edit Recipe</Button>
-        </RouterLink>
-        <RouterLink to="/">
-          <Button size="small" color="primary">Back to Recipes</Button>
-        </RouterLink>
-      </Paper>
+      <RecipeInfoSection
+        title="Description"
+        body={recipe.description} />
+      <RecipeInfoSection
+        title="Ingredients"
+        body={recipe.ingredients} />
+      <RecipeInfoSection
+        title="Instructions"
+        body={recipe.instructions} />
     </React.Fragment>
   );
 }

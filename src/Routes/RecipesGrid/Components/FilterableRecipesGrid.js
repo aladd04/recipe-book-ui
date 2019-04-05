@@ -67,6 +67,16 @@ export function FilterableRecipesGrid({ allRecipes }) {
           </Typography>
         </Grid>
       )}
+      <Grid item xs={12}>
+        <ClientSidePaginator
+          decrementPageNumber={paginator.decrementPageNumber}
+          displayStartNumber={paginator.displayStartNumber}
+          displayEndNumber={paginator.displayEndNumber}
+          dataCount={paginator.dataCount}
+          currentPageNumber={paginator.pageNumber}
+          maxPageNumber={paginator.maxPageNumber}
+          incrementPageNumber={paginator.incrementPageNumber} />
+      </Grid>
     </Grid>
   );
 }
