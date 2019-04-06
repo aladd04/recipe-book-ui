@@ -1,7 +1,7 @@
-import useRecipeService from "../../Hooks/useRecipeService";
-import { PageHeader } from "../../Helpers/PageHeader";
-import { LoadingWrapper } from "../../Helpers/LoadingWrapper";
-import { RouterLink } from "../../Helpers/RouterLink";
+import { getRecipeById } from "../../Services/recipeService";
+import { PageHeader } from "../../Shared/PageHeader";
+import { LoadingWrapper } from "../../Shared/LoadingWrapper";
+import { RouterLink } from "../../Shared/RouterLink";
 import { RecipeInfo } from "./Components/RecipeInfo";
 
 import React, {
@@ -14,14 +14,13 @@ import {
 } from "@material-ui/core";
 
 export function RecipeView(props) {
-  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [recipe, setRecipe] = useState({ name: "View Recipe" });
   const [ownerBlurb, setOwnerBlurb] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
-    recipeService.getRecipeById(props.match.params.id, (response) => {
+    getRecipeById(props.match.params.id, (response) => {
       setRecipe(response.data);
       setIsLoading(false);
     });

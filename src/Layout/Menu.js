@@ -66,7 +66,7 @@ export function Menu(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-            Recipe Book
+            KatieMae's Recipe Book
           </Typography>
         </Toolbar>
       </AppBar>

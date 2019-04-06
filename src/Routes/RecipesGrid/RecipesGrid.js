@@ -1,6 +1,6 @@
-import useRecipeService from "../../Hooks/useRecipeService";
-import { LoadingWrapper } from "../../Helpers/LoadingWrapper";
-import { PageHeader } from "../../Helpers/PageHeader";
+import { getAllRecipes } from "../../Services/recipeService";
+import { LoadingWrapper } from "../../Shared/LoadingWrapper";
+import { PageHeader } from "../../Shared/PageHeader";
 import { FilterableRecipesGrid } from "./Components/FilterableRecipesGrid";
 
 import React, {
@@ -9,24 +9,15 @@ import React, {
 } from "react";
 
 export function RecipesGrid() {
-  let delayStartLoadingTimer;
-
-  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
-    delayStartLoadingTimer = setTimeout(() => {
-      recipeService.getAllRecipes((response) => {
-        setAllRecipes(response.data);
-        setIsLoading(false);
-      });
-    }, 300);
-
-    return () => {
-      clearTimeout(delayStartLoadingTimer);
-    };
+    getAllRecipes((response) => {
+      setAllRecipes(response.data);
+      setIsLoading(false);
+    });
   }, []);
 
   return (

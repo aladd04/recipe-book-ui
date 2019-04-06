@@ -1,7 +1,5 @@
-import useClientSidePagination from "../../../Hooks/useClientSidePagination";
-import { ClientSidePaginator } from "../../../Helpers/ClientSidePaginator";
 import { RecipesFilterForm } from "./RecipesFilterForm";
-import { RecipeGridCard } from "./RecipeGridCard";
+import { PageableRecipesGrid } from "./PageableRecipesGrid";
 
 import React, {
   useState,
@@ -9,14 +7,11 @@ import React, {
 } from "react";
 import {
   Grid,
-  Paper,
-  Typography
+  Paper
 } from "@material-ui/core";
-import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function FilterableRecipesGrid({ allRecipes }) {
-  const paginator = useClientSidePagination(6);
-  const [matchingRecipes, setMatchingRecipes] = useState([]);
+  const [matchingRecipes, setMatchingRecipes] = useState([...allRecipes]);
   const [nameQuery, setNameQuery] = useState("");
 
   useEffect(() => {
@@ -30,7 +25,6 @@ export function FilterableRecipesGrid({ allRecipes }) {
 
     sortRecipesByName(workingRecipes);
 
-    paginator.handleNewDataReceived(workingRecipes.length);
     setMatchingRecipes(workingRecipes);
   }, [nameQuery]);
 
@@ -53,8 +47,6 @@ export function FilterableRecipesGrid({ allRecipes }) {
     });
   }
 
-  const recipesToDisplay = paginator.getDataToDisplay(matchingRecipes);
-
   return (
     <Grid container spacing={24}>
       <Grid item xs={12}>
@@ -64,38 +56,7 @@ export function FilterableRecipesGrid({ allRecipes }) {
             handleSearchQueryChange={handleSearchQueryChange} />
         </Paper>
       </Grid>
-      <Grid item xs={12}>
-        <ClientSidePaginator
-          decrementPageNumber={paginator.decrementPageNumber}
-          displayStartNumber={paginator.displayStartNumber}
-          displayEndNumber={paginator.displayEndNumber}
-          dataCount={paginator.dataCount}
-          currentPageNumber={paginator.pageNumber}
-          maxPageNumber={paginator.maxPageNumber}
-          incrementPageNumber={paginator.incrementPageNumber} />
-      </Grid>
-      {recipesToDisplay.length > 0 ? recipesToDisplay.map(r => (
-        <Grid item md={4} sm={6} xs={12} key={r.id}>
-          <RecipeGridCard recipe={r} />
-        </Grid>
-      )) : (
-        <Grid item xs={12} className="rb-no-recipe-results-container">
-          <MoodBadIcon fontSize="large" />
-          <Typography variant="subtitle1">
-            Oh no! It looks like that food doesn't exist!
-          </Typography>
-        </Grid>
-      )}
-      <Grid item xs={12}>
-        <ClientSidePaginator
-          decrementPageNumber={paginator.decrementPageNumber}
-          displayStartNumber={paginator.displayStartNumber}
-          displayEndNumber={paginator.displayEndNumber}
-          dataCount={paginator.dataCount}
-          currentPageNumber={paginator.pageNumber}
-          maxPageNumber={paginator.maxPageNumber}
-          incrementPageNumber={paginator.incrementPageNumber} />
-      </Grid>
+      <PageableRecipesGrid recipes={matchingRecipes} />
     </Grid>
   );
 }

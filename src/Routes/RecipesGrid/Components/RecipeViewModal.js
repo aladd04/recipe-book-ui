@@ -1,5 +1,5 @@
-import { PageHeader } from "../../../Helpers/PageHeader";
-import { RouterLink } from "../../../Helpers/RouterLink";
+import { PageHeader } from "../../../Shared/PageHeader";
+import { RouterLink } from "../../../Shared/RouterLink";
 import { RecipeInfo } from "../../RecipeView/Components/RecipeInfo";
 
 import React, {

@@ -8,12 +8,19 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 export function ClientSidePaginator(props) {
+  const previousButtonDisabled = props.currentPageNumber <= 1;
+  const nextButtonDisabled = props.currentPageNumber === props.maxPageNumber;
+
   return (
     <div className="rb-paginator">
       <Tooltip title="Previous Page" placement="right">
-        <IconButton onClick={props.decrementPageNumber}>
-          <ArrowBackIcon />
-        </IconButton>
+        <div className={previousButtonDisabled ? "not-allowed" : ""}>
+          <IconButton
+            onClick={props.decrementPageNumber}
+            disabled={previousButtonDisabled}>
+            <ArrowBackIcon />
+          </IconButton>
+        </div>
       </Tooltip>
       <Typography variant="caption" className="rb-paginator-help-text">
         <span>
@@ -29,9 +36,13 @@ export function ClientSidePaginator(props) {
         </span>
       </Typography>
       <Tooltip title="Next Page" placement="left">
-        <IconButton onClick={props.incrementPageNumber}>
+      <div className={nextButtonDisabled ? "not-allowed" : ""}>
+        <IconButton
+          onClick={props.incrementPageNumber}
+          disabled={nextButtonDisabled}>
           <ArrowForwardIcon />
         </IconButton>
+      </div>
       </Tooltip>
     </div>
   );

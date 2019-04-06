@@ -1,5 +1,5 @@
 import { Menu } from "./Layout/Menu";
-import Footer from "./Layout/Footer";
+import { Footer } from "./Layout/Footer";
 import { RecipesGrid } from "./Routes/RecipesGrid/RecipesGrid";
 import { RecipeView } from "./Routes/RecipeView/RecipeView";
 import { RecipeEdit } from "./Routes/RecipeEdit/RecipeEdit";
@@ -7,7 +7,7 @@ import { Login } from "./Routes/Login/Login";
 import { SignUp } from "./Routes/SignUp/SignUp";
 import { Settings } from "./Routes/Settings/Settings";
 import { SignOut } from "./Routes/SignOut/SignOut";
-import { RouteNotFound } from "./Helpers/RouteNotFound";
+import { RouteNotFound } from "./Shared/RouteNotFound";
 
 import "typeface-roboto";
 import React from "react";
