@@ -2,11 +2,6 @@ import { Menu } from "./Layout/Menu";
 import { Footer } from "./Layout/Footer";
 import { RecipesGrid } from "./Routes/RecipesGrid/RecipesGrid";
 import { RecipeView } from "./Routes/RecipeView/RecipeView";
-import { RecipeEdit } from "./Routes/RecipeEdit/RecipeEdit";
-import { Login } from "./Routes/Login/Login";
-import { SignUp } from "./Routes/SignUp/SignUp";
-import { Settings } from "./Routes/Settings/Settings";
-import { SignOut } from "./Routes/SignOut/SignOut";
 import { RouteNotFound } from "./Shared/RouteNotFound";
 
 import "typeface-roboto";
@@ -28,11 +23,6 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={RecipesGrid} />
           <Route exact path="/recipe/:id" component={RecipeView} />
-          <Route exact path="/recipe/edit/:id" component={RecipeEdit} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/settings" component={Settings} />
-          <Route path="/signout" component={SignOut} />
           <Route component={RouteNotFound} />
         </Switch>
       </main>

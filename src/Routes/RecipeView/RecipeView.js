@@ -23,6 +23,10 @@ export function RecipeView(props) {
     getRecipeById(props.match.params.id, (response) => {
       setRecipe(response.data);
       setIsLoading(false);
+    }, (error) => {
+      if (error.response && error.response.status === 404) {
+        props.history.push("/notfound");
+      }
     });
   }, []);
 

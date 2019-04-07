@@ -17,11 +17,22 @@ import {
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function PageableRecipesGrid({ recipes }) {
-  const [state, dispatch] = useReducer(reducer, recipes, setInitialState);
+  const [state, dispatch] = useReducer(
+    reducer,
+    createInitialState(),
+    setInitialState
+  );
 
   useEffect(() => {
-    dispatch({ type: actionType.reset, payload: recipes });
+    dispatch({ type: actionType.reset, payload: createInitialState() });
   }, [recipes]);
+
+  function createInitialState() {
+    return {
+      pageSize: 6,
+      data: [...recipes]
+    };
+  }
 
   function goToNextPage() {
     dispatch({ type: actionType.nextPage });
