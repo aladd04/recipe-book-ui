@@ -1,15 +1,15 @@
-import { ApiUrl } from "./serviceConfig";
+import { createApiInstance } from "./serviceConfig";
 
-import axios from "axios";
+const api = createApiInstance("Recipe");
 
 export function getAllRecipes(handleResponse, handleError) {
-  axios.get(`${ApiUrl}/Recipe`)
+  api.get()
     .then(handleResponse)
     .catch(handleError);
 }
 
 export function getRecipeById(id, handleResponse, handleError) {
-  axios.get(`${ApiUrl}/Recipe/${id}`)
+  api.get(`/${id}`)
     .then(handleResponse)
     .catch(handleError);
 }
