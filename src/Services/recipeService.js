@@ -1,15 +1,22 @@
 import { createApiInstance } from "./serviceConfig";
 
-const api = createApiInstance("Recipe");
+export function createRecipeService() {
+  const api = createApiInstance("Recipe");
 
-export function getAllRecipes(handleResponse, handleError) {
-  api.get()
-    .then(handleResponse)
-    .catch(handleError);
-}
+  function getAllRecipes(handleResponse, handleError) {
+    api.get()
+      .then(handleResponse)
+      .catch(handleError);
+  }
 
-export function getRecipeById(id, handleResponse, handleError) {
-  api.get(`/${id}`)
-    .then(handleResponse)
-    .catch(handleError);
+  function getRecipeById(id, handleResponse, handleError) {
+    api.get(`/${id}`)
+      .then(handleResponse)
+      .catch(handleError);
+  }
+
+  return {
+    getAllRecipes,
+    getRecipeById
+  }
 }

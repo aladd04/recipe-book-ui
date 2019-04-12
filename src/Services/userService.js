@@ -4,25 +4,31 @@ import {
   removeAuthToken
 } from "./serviceConfig";
 
-const api = createApiInstance("AppUser");
+export function createUserService() {
+  const api = createApiInstance("AppUser");
 
-export function authenticateWithGoogle(token, handleResponse, handleError) {
-  const body = {
-    token: token
-  };
-
-  api.post("/authenticate/google", body)
-    .then((response) => {
-      if (response.token) {
-        saveAuthToken(response.token);
-        handleResponse(true);
-      } else {
+  function authenticateWithGoogle(token, handleResponse, handleError) {
+    const body = {
+      token: token
+    };
+  
+    api.post("/authenticate/google", body)
+      .then((response) => {
+        if (response && response.status === 200 && response.data.token) {
+          saveAuthToken(response.data.token);
+          handleResponse(true);
+        } else {
+          removeAuthToken();
+          handleResponse(false);
+        }
+      })
+      .catch((error) => {
         removeAuthToken();
-        handleResponse(false);
-      }
-    })
-    .catch((error) => {
-      removeAuthToken();
-      handleError(error);
-    });
+        console.log(error);
+      });
+  }
+
+  return {
+    authenticateWithGoogle
+  };
 }

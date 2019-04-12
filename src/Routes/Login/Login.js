@@ -1,12 +1,16 @@
 import { GoogleClientId } from "../../Services/serviceConfig";
-import { authenticateWithGoogle } from "../../Services/userService";
+import { createUserService } from "../../Services/userService";
 
-import React from "react";
+import React, {
+  useState
+} from "react";
 import { GoogleLogin } from "react-google-login";
 
 export function Login(props) {
+  const [userService] = useState(() => createUserService());
+
   function handleGoogleSuccessResponse(response) {
-    authenticateWithGoogle(response.tokenId, (isSuccess) => {
+    userService.authenticateWithGoogle(response.tokenId, (isSuccess) => {
       if (isSuccess) {
         props.history.push("/");
       }
