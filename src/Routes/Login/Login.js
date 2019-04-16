@@ -10,7 +10,7 @@ export function Login(props) {
   const [userService] = useState(() => createUserService());
 
   function handleGoogleSuccessResponse(response) {
-    userService.authenticateWithGoogle(response.tokenId, (isSuccess) => {
+    userService.login(response.tokenId, (isSuccess) => {
       if (isSuccess) {
         props.history.push("/");
       }

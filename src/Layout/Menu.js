@@ -17,7 +17,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
-export function Menu(props) {
+export function Menu() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const alwaysActions = [{
@@ -43,8 +43,8 @@ export function Menu(props) {
       url: "/settings",
       icon: <SettingsIcon />
     }, {
-      text: "Sign Out",
-      url: "/signout",
+      text: "Logout",
+      url: "/logout",
       icon: <ArrowBack />
     }
   ];

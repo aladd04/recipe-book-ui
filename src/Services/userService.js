@@ -5,14 +5,14 @@ import {
 } from "./serviceConfig";
 
 export function createUserService() {
-  const api = createApiInstance("AppUser");
+  const api = createApiInstance("Auth");
 
-  function authenticateWithGoogle(token, handleResponse, handleError) {
+  function login(token, handleResponse, handleError) {
     const body = {
       token: token
     };
   
-    api.post("/authenticate/google", body)
+    api.post("/login", body)
       .then((response) => {
         if (response && response.status === 200 && response.data.token) {
           saveAuthToken(response.data.token);
@@ -28,7 +28,12 @@ export function createUserService() {
       });
   }
 
+  function logout() {
+    removeAuthToken();
+  }
+
   return {
-    authenticateWithGoogle
+    login,
+    logout
   };
 }
