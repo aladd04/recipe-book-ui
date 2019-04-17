@@ -1,15 +1,22 @@
-import { ApiUrl } from "./serviceConfig";
+import { createApiInstance } from "../Factories/apiFactory";
 
-import axios from "axios";
+export function createRecipeService() {
+  const api = createApiInstance("Recipe");
 
-export function getAllRecipes(handleResponse, handleError) {
-  axios.get(`${ApiUrl}/Recipe`)
-    .then(handleResponse)
-    .catch(handleError);
-}
+  function getAllRecipes(handleResponse, handleError) {
+    api.get()
+      .then(handleResponse)
+      .catch(handleError);
+  }
 
-export function getRecipeById(id, handleResponse, handleError) {
-  axios.get(`${ApiUrl}/Recipe/${id}`)
-    .then(handleResponse)
-    .catch(handleError);
+  function getRecipeById(id, handleResponse, handleError) {
+    api.get(`/${id}`)
+      .then(handleResponse)
+      .catch(handleError);
+  }
+
+  return {
+    getAllRecipes,
+    getRecipeById
+  }
 }

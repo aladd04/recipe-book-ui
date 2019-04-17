@@ -1,4 +1,4 @@
-import { getRecipeById } from "../../Services/recipeService";
+import { createRecipeService } from "../../Services/recipeService";
 import { PageHeader } from "../../Shared/PageHeader";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { RouterLink } from "../../Shared/RouterLink";
@@ -14,18 +14,21 @@ import {
 } from "@material-ui/core";
 
 export function RecipeView(props) {
+  const [recipeService] = useState(() => createRecipeService());
   const [isLoading, setIsLoading] = useState(true);
   const [recipe, setRecipe] = useState({ name: "View Recipe" });
   const [ownerBlurb, setOwnerBlurb] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
-    getRecipeById(props.match.params.id, (response) => {
+    recipeService.getRecipeById(props.match.params.id, (response) => {
       setRecipe(response.data);
       setIsLoading(false);
     }, (error) => {
-      if (error.response && error.response.status === 404) {
+      if (error.response.status === 404) {
         props.history.push("/notfound");
+      } else if (error.response.status === 401) {
+        props.history.push("/login");
       }
     });
   }, []);

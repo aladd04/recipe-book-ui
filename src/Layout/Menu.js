@@ -1,4 +1,5 @@
-import { NavigationDrawer } from "./NavigationDrawer"
+import { userIsValid } from "../Factories/authFactory";
+import { NavigationDrawer } from "./NavigationDrawer";
 
 import React, {
   useState
@@ -11,12 +12,11 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import FastFoodIcon from "@material-ui/icons/Fastfood";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
-export function Menu(props) {
+export function Menu() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const alwaysActions = [{
@@ -30,10 +30,6 @@ export function Menu(props) {
       text: "Login",
       url: "/login",
       icon: <ArrowForward />
-    }, {
-      text: "Sign Up",
-      url: "/signup",
-      icon: <PersonAddIcon />
     }
   ];
 
@@ -42,8 +38,8 @@ export function Menu(props) {
       url: "/settings",
       icon: <SettingsIcon />
     }, {
-      text: "Sign Out",
-      url: "/signout",
+      text: "Logout",
+      url: "/logout",
       icon: <ArrowBack />
     }
   ];
@@ -59,7 +55,7 @@ export function Menu(props) {
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}
-        otherActions={props.signedIn ? signedInActions : signedOutActions} />
+        otherActions={userIsValid() ? signedInActions : signedOutActions} />
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>

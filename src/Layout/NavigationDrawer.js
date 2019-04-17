@@ -19,8 +19,8 @@ export function NavigationDrawer(props) {
       </Typography>
       <Divider />
       <NavigationDrawerList actions={props.primaryActions} {...props} />
-      {/* <Divider />
-      <NavigationDrawerList actions={props.otherActions} {...props} /> */}
+      <Divider />
+      <NavigationDrawerList actions={props.otherActions} {...props} />
     </Drawer>
   );
 }

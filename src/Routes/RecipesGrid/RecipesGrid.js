@@ -1,4 +1,4 @@
-import { getAllRecipes } from "../../Services/recipeService";
+import { createRecipeService } from "../../Services/recipeService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { PageHeader } from "../../Shared/PageHeader";
 import { FilterableRecipesGrid } from "./Components/FilterableRecipesGrid";
@@ -9,12 +9,13 @@ import React, {
 } from "react";
 
 export function RecipesGrid() {
+  const [recipeService] = useState(() => createRecipeService());
   const [isLoading, setIsLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
-    getAllRecipes((response) => {
+    recipeService.getAllRecipes((response) => {
       setAllRecipes(response.data);
       setIsLoading(false);
     });
