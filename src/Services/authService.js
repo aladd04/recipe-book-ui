@@ -1,10 +1,10 @@
+import { createApiInstance } from "../Factories/apiFactory";
 import {
-  createApiInstance,
-  saveAuthToken,
-  removeAuthToken
-} from "./serviceConfig";
+  saveToken,
+  removeToken
+} from "../Factories/authFactory";
 
-export function createUserService() {
+export function createAuthService() {
   const api = createApiInstance("Auth");
 
   function login(token, handleResponse, handleError) {
@@ -15,21 +15,20 @@ export function createUserService() {
     api.post("/login", body)
       .then((response) => {
         if (response && response.status === 200 && response.data.token) {
-          saveAuthToken(response.data.token);
+          saveToken(response.data.token);
           handleResponse(true);
         } else {
-          removeAuthToken();
+          removeToken();
           handleResponse(false);
         }
       })
       .catch((error) => {
-        removeAuthToken();
-        console.log(error);
+        removeToken();
       });
   }
 
   function logout() {
-    removeAuthToken();
+    removeToken();
   }
 
   return {

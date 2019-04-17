@@ -1,5 +1,5 @@
-import { userIsAuthenticated } from "../Services/serviceConfig";
-import { NavigationDrawer } from "./NavigationDrawer"
+import { userIsValid } from "../Factories/authFactory";
+import { NavigationDrawer } from "./NavigationDrawer";
 
 import React, {
   useState
@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import FastFoodIcon from "@material-ui/icons/Fastfood";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
@@ -31,10 +30,6 @@ export function Menu() {
       text: "Login",
       url: "/login",
       icon: <ArrowForward />
-    }, {
-      text: "Sign Up",
-      url: "/signup",
-      icon: <PersonAddIcon />
     }
   ];
 
@@ -60,9 +55,7 @@ export function Menu() {
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}
-        otherActions={userIsAuthenticated()
-          ? signedInActions
-          : signedOutActions} />
+        otherActions={userIsValid() ? signedInActions : signedOutActions} />
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>

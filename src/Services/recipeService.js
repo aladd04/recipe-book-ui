@@ -1,4 +1,4 @@
-import { createApiInstance } from "./serviceConfig";
+import { createApiInstance } from "../Factories/apiFactory";
 
 export function createRecipeService() {
   const api = createApiInstance("Recipe");

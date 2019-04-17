@@ -3,6 +3,7 @@ import { Footer } from "./Layout/Footer";
 import { RecipesGrid } from "./Routes/RecipesGrid/RecipesGrid";
 import { RecipeView } from "./Routes/RecipeView/RecipeView";
 import { Login } from "./Routes/Login/Login";
+import { Logout } from "./Routes/Logout/Logout";
 import { RouteNotFound } from "./Shared/RouteNotFound";
 
 import "typeface-roboto";
@@ -25,6 +26,7 @@ export default function App() {
           <Route exact path="/" component={RecipesGrid} />
           <Route exact path="/recipe/:id" component={RecipeView} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/logout" component={Logout} />
           <Route component={RouteNotFound} />
         </Switch>
       </main>

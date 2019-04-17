@@ -1,33 +1,43 @@
-import { GoogleClientId } from "../../Services/serviceConfig";
-import { createUserService } from "../../Services/userService";
+import { GoogleClientId } from "../../config";
+import { createAuthService } from "../../Services/authService";
 
 import React, {
   useState
 } from "react";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Typography
+} from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 
 export function Login(props) {
-  const [userService] = useState(() => createUserService());
+  const [authService] = useState(() => createAuthService());
 
   function handleGoogleSuccessResponse(response) {
-    userService.login(response.tokenId, (isSuccess) => {
+    authService.login(response.tokenId, (isSuccess) => {
       if (isSuccess) {
         props.history.push("/");
       }
     });
   }
 
-  function handleGoogleFailureResponse(response) {
-    console.log(response);
-  }
-
   return (
-    <React.Fragment>
-      <GoogleLogin
-        clientId={GoogleClientId}
-        buttonText="Google Login"
-        onSuccess={handleGoogleSuccessResponse}
-        onFailure={handleGoogleFailureResponse} />
-    </React.Fragment>
+    <Card>
+      <CardHeader title="Login to create and edit recipes!" />
+      <CardContent>
+        <Typography variant="body1">
+          Click the button below to login using your Google account.
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <GoogleLogin
+          clientId={GoogleClientId}
+          buttonText="Google Login"
+          onSuccess={handleGoogleSuccessResponse}/>
+      </CardActions>
+    </Card>
   );
 }
