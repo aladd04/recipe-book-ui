@@ -1,6 +1,5 @@
 import { ApiUrl } from "../config";
 import { useAuthToken } from "./useAuthToken";
-
 import {
   useState,
   useEffect
@@ -22,11 +21,9 @@ export function useAxiosApi(resource) {
   }, [token]);
 
   function initializeApi() {
-    const apiInstance = axios.create({
+    return axios.create({
       baseURL: `${ApiUrl}/${resource}`
     });
-
-    return apiInstance;
   }
 
   return api;

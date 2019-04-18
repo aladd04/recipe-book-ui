@@ -1,5 +1,4 @@
 import RecipeViewModal from "./RecipeViewModal";
-
 import React, {
   useState
 } from "react";

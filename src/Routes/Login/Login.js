@@ -1,6 +1,5 @@
 import { GoogleClientId } from "../../config";
 import { useAuthService } from "../../Hooks/useAuthService";
-
 import React from "react";
 import {
   Card,

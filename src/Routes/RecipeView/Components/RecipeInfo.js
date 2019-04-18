@@ -1,5 +1,4 @@
 import { RecipeInfoSection } from "./RecipeInfoSection";
-
 import React from "react";
 
 export function RecipeInfo({ recipe, ...props }) {

@@ -5,7 +5,6 @@ import {
 } from "../../../Reducers/paginationReducer";
 import { ClientSidePaginator } from "../../../Shared/ClientSidePaginator";
 import { RecipeGridCard } from "./RecipeGridCard";
-
 import React, {
   useEffect,
   useReducer
