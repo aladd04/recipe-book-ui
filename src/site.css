@@ -72,3 +72,10 @@ main#main-content {
   margin-left: 16px;
   white-space: pre-wrap;
 }
+
+.rb-recipe-view-action-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

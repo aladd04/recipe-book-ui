@@ -1,11 +1,8 @@
-import { createApiInstance } from "../Factories/apiFactory";
-import {
-  saveToken,
-  removeToken
-} from "../Factories/authFactory";
+import { AuthTokenKey } from "../config";
+import { useAxiosApi } from "../Hooks/useAxiosApi";
 
-export function createAuthService() {
-  const api = createApiInstance("Auth");
+export function useAuthService() {
+  const api = useAxiosApi("Auth");
 
   function login(token, handleResponse, handleError) {
     const body = {
@@ -15,20 +12,23 @@ export function createAuthService() {
     api.post("/login", body)
       .then((response) => {
         if (response && response.status === 200 && response.data.token) {
-          saveToken(response.data.token);
+          localStorage.setItem(AuthTokenKey, token);
           handleResponse(true);
         } else {
-          removeToken();
+          logout();
           handleResponse(false);
         }
       })
       .catch((error) => {
-        removeToken();
+        logout();
+        if (handleError) {
+          handleError(error);
+        }
       });
   }
 
   function logout() {
-    removeToken();
+    localStorage.removeItem(AuthTokenKey);
   }
 
   return {

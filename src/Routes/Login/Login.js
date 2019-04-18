@@ -1,9 +1,7 @@
 import { GoogleClientId } from "../../config";
-import { createAuthService } from "../../Services/authService";
+import { useAuthService } from "../../Hooks/useAuthService";
 
-import React, {
-  useState
-} from "react";
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -14,7 +12,7 @@ import {
 import { GoogleLogin } from "react-google-login";
 
 export function Login(props) {
-  const [authService] = useState(() => createAuthService());
+  const authService = useAuthService();
 
   function handleGoogleSuccessResponse(response) {
     authService.login(response.tokenId, (isSuccess) => {

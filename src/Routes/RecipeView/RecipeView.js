@@ -1,20 +1,17 @@
-import { createRecipeService } from "../../Services/recipeService";
+import { useRecipeService } from "../../Hooks/useRecipeService";
 import { PageHeader } from "../../Shared/PageHeader";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
-import { RouterLink } from "../../Shared/RouterLink";
 import { RecipeInfo } from "./Components/RecipeInfo";
+import { RecipeViewActions } from "./Components/RecipeViewActions";
 
 import React, {
   useState,
   useEffect
 } from "react";
-import {
-  Paper,
-  Button
-} from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 
 export function RecipeView(props) {
-  const [recipeService] = useState(() => createRecipeService());
+  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [recipe, setRecipe] = useState({ name: "View Recipe" });
   const [ownerBlurb, setOwnerBlurb] = useState("");
@@ -33,17 +30,17 @@ export function RecipeView(props) {
     });
   }, []);
 
+  function deleteRecipe() {
+    alert("not implemented yet");
+  }
+
   return (
     <React.Fragment>
       <PageHeader text={recipe.name} subText={ownerBlurb} />
       <LoadingWrapper isLoading={isLoading}>
         <Paper style={{ padding: 12 }}>
           <RecipeInfo recipe={recipe} setOwnerBlurb={setOwnerBlurb} />
-          <RouterLink to="/">
-            <Button size="small" color="primary">
-              To All Recipes
-            </Button>
-          </RouterLink>
+          <RecipeViewActions recipeId={recipe.id} deleteRecipe={deleteRecipe} />
         </Paper>
       </LoadingWrapper>
     </React.Fragment>

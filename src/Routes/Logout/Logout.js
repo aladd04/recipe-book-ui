@@ -1,4 +1,4 @@
-import { removeToken } from "../../Factories/authFactory";
+import { useAuthService } from "../../Hooks/useAuthService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 
 import React, {
@@ -8,11 +8,12 @@ import React, {
 import { Redirect } from "react-router-dom";
 
 export function Logout() {
+  const authService = useAuthService();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    removeToken();
+    authService.logout();
     setIsLoading(false);
   }, []);
 

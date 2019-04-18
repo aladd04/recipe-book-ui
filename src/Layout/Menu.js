@@ -1,4 +1,3 @@
-import { userIsValid } from "../Factories/authFactory";
 import { NavigationDrawer } from "./NavigationDrawer";
 
 import React, {
@@ -55,7 +54,7 @@ export function Menu() {
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}
-        otherActions={userIsValid() ? signedInActions : signedOutActions} />
+        otherActions={signedInActions.concat(signedOutActions)} />
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>
