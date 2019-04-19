@@ -1,5 +1,8 @@
-import { AuthTokenKey } from "../config";
 import { useAxiosApi } from "../Hooks/useAxiosApi";
+import {
+  setToken,
+  removeToken
+} from "../Helpers/authHelper";
 
 export function useAuthService() {
   const api = useAxiosApi("Auth");
@@ -12,15 +15,15 @@ export function useAuthService() {
     api.post("/login", body)
       .then((response) => {
         if (response && response.status === 200 && response.data.token) {
-          localStorage.setItem(AuthTokenKey, token);
+          setToken(response.data.token);
           handleResponse(true);
         } else {
-          logout();
+          removeToken();
           handleResponse(false);
         }
       })
       .catch((error) => {
-        logout();
+        removeToken();
         if (handleError) {
           handleError(error);
         }
@@ -28,7 +31,7 @@ export function useAuthService() {
   }
 
   function logout() {
-    localStorage.removeItem(AuthTokenKey);
+    removeToken();
   }
 
   return {

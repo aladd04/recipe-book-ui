@@ -1,4 +1,5 @@
 import { NavigationDrawer } from "./NavigationDrawer";
+import { isAuthenticated } from "../Helpers/authHelper";
 import React, {
   useState
 } from "react";
@@ -53,7 +54,9 @@ export function Menu() {
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}
-        otherActions={signedInActions.concat(signedOutActions)} />
+        otherActions={isAuthenticated()
+          ? signedInActions
+          : signedOutActions} />
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>
