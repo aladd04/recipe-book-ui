@@ -10,13 +10,20 @@ import {
   Paper,
   TextField,
   Button,
-  Divider
+  Divider,
+  Snackbar,
+  SnackbarContent
 } from "@material-ui/core";
+import green from "@material-ui/core/colors/green";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
 
 export function CreateRecipe() {
   const disableActions = !isAuthenticated();
   const recipeService = useRecipeService();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toastOpen, setToastOpen] = useState(false);
   const [recipe, setRecipe] = useState(() =>getBlankRecipe());
   const [errors, setErrors] = useState(() => getBlankErrors());
 
@@ -147,12 +154,17 @@ export function CreateRecipe() {
     setIsModalOpen(true);
   }
 
+  function handleToastClose() {
+    setToastOpen(false);
+  }
+
   function createRecipe() {
     if (validateForm(true)) {
       recipeService.createRecipe(recipe, (response) => {
         console.log(response);
         if (response && response.status === 200) {
           // TODO: show create message? redirect to all recipes? both?
+          // For above, migrate snackbar code to achieve it?
         } else {
           // TODO: display error
         }
@@ -230,6 +242,25 @@ export function CreateRecipe() {
           question="Are you sure you want to cancel all changes?"
           onYes={onYesModal}
           onNo={onNoModal} />
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={toastOpen}
+          autoHideDuration={5000}
+          onClose={handleToastClose}>
+          <SnackbarContent
+            style={{ backgroundColor: green[600] }}
+            message={
+              <span>
+                <CheckCircleIcon />
+                Recipe Created!
+              </span>
+            }
+            action={
+              <IconButton onClick={handleToastClose}>
+                <CloseIcon />
+              </IconButton>
+            } />
+        </Snackbar>
       </Paper>
     </React.Fragment>
   );
