@@ -95,3 +95,10 @@ main#main-content {
   align-items: center;
   justify-content: space-between;
 }
+
+.rb-validation-summary {
+  padding: 10px 10px 10px 0;
+  border: 1px solid #b71c1c;
+  border-radius: 5px;
+  background: rgba(255, 224, 222, 0.5);
+}

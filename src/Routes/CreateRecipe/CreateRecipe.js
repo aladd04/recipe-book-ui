@@ -12,7 +12,8 @@ import {
   Button,
   Divider,
   Snackbar,
-  SnackbarContent
+  SnackbarContent,
+  Typography
 } from "@material-ui/core";
 import green from "@material-ui/core/colors/green";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
@@ -164,17 +165,28 @@ export function CreateRecipe() {
     }
   }
 
-  const showValidationSummary = Object.keys(errors)
-    .some(k => !errors[k].isValid);
+  const errorsToShow = Object.keys(errors)
+    .map(k => errors[k])
+    .filter(e => !e.isValid);
 
   return (
     <React.Fragment>
       <PageHeader text="Create a new Recipe" />
       <Paper style={{ padding: 12 }}>
-        <div style={showValidationSummary ? {} : { display: "none" }}>
-          <div>{errors.name.message}</div>
-          <div>{errors.ingredients.message}</div>
-          <div>{errors.instructions.message}</div>
+        <div
+          className="rb-validation-summary"
+          style={errorsToShow.length > 0 ? {} : { display: "none" }}>
+          <ul>
+            {errorsToShow.map(e => {
+              return (
+                <li key={e.message}>
+                  <Typography variant="body1">
+                    {e.message}
+                  </Typography>
+                </li>
+              );
+            })}
+          </ul>
         </div>
         <TextField
           fullWidth
