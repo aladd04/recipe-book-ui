@@ -12,7 +12,7 @@ import { Paper } from "@material-ui/core";
 export function RecipeView(props) {
   const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
-  const [recipe, setRecipe] = useState({ name: "View Recipe" });
+  const [recipe, setRecipe] = useState({ name: "" });
   const [ownerBlurb, setOwnerBlurb] = useState("");
 
   useEffect(() => {
@@ -23,11 +23,13 @@ export function RecipeView(props) {
     }, (error) => {
       if (error.response.status === 404) {
         props.history.push("/notfound");
-      } else if (error.response.status === 401) {
-        props.history.push("/login");
       }
     });
   }, []);
+
+  function editRecipe() {
+    props.history.push(`/recipe/${recipe.id}/edit`);
+  }
 
   function deleteRecipe() {
     alert("not implemented yet");
@@ -39,7 +41,9 @@ export function RecipeView(props) {
       <LoadingWrapper isLoading={isLoading}>
         <Paper style={{ padding: 12 }}>
           <RecipeInfo recipe={recipe} setOwnerBlurb={setOwnerBlurb} />
-          <RecipeViewActions recipeId={recipe.id} deleteRecipe={deleteRecipe} />
+          <RecipeViewActions
+            editRecipe={editRecipe}
+            deleteRecipe={deleteRecipe} />
         </Paper>
       </LoadingWrapper>
     </React.Fragment>

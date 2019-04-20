@@ -1,3 +1,4 @@
+import { isAuthenticated } from "../../../Helpers/authHelper";
 import { RouterLink } from "../../../Shared/RouterLink";
 import React from "react";
 import {
@@ -9,31 +10,47 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 export function RecipeViewActions(props) {
+  const disableActions = !isAuthenticated();
+
   return (
     <div className="rb-recipe-view-action-container">
-      <div>
-        <Tooltip title="Edit" placement="top">
-          <RouterLink to={`/recipe/edit/${props.recipeId}`}>
-            <Fab color="primary" size="small">
-              <EditIcon />
-            </Fab>
-          </RouterLink>
-        </Tooltip>
-        <Tooltip title="Delete Recipe" placement="top">
-          <Fab
-            color="secondary"
-            size="small"
-            style={{ marginLeft: 10 }}
-            onClick={props.deleteRecipe}>
-            <DeleteIcon />
-          </Fab>
-        </Tooltip>
-      </div>
       <RouterLink to="/">
         <Button size="small" color="primary">
           To All Recipes
         </Button>
       </RouterLink>
+      <div>
+        <Tooltip
+          title="Edit"
+          placement="bottom"
+          disableHoverListener={disableActions}>
+          <span style={{ marginRight: 10 }}>
+            <Fab
+              color="primary"
+              size="small"
+              onClick={props.editRecipe}
+              disabled={disableActions}>
+              <EditIcon />
+            </Fab>
+          </span>
+        </Tooltip>
+        <span>
+          <Tooltip
+            title="Delete Recipe"
+            placement="bottom"
+            disableHoverListener={disableActions}>
+            <span>
+              <Fab
+                color="secondary"
+                size="small"
+                onClick={props.deleteRecipe}
+                disabled={disableActions}>
+                <DeleteIcon />
+              </Fab>
+            </span>
+          </Tooltip>
+        </span>
+      </div>
     </div>
   );
 }

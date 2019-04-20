@@ -45,6 +45,22 @@ main#main-content {
   align-items: center;
 }
 
+.rb-divider {
+  margin: 16px 0 !important;
+}
+
+.rb-page-header-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.rb-page-header-container .rb-page-header-primary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .rb-no-recipe-results-container {
   display: flex;
   flex-direction: column;
