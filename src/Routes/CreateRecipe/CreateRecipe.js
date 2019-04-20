@@ -1,5 +1,7 @@
+import { isAuthenticated } from "../../Helpers/authHelper";
 import { PageHeader } from "../../Shared/PageHeader";
 import YesNoModal from "../../Shared/YesNoModal";
+import { useRecipeService } from "../../Hooks/useRecipeService";
 import React, {
   useState,
   useEffect
@@ -12,26 +14,14 @@ import {
 } from "@material-ui/core";
 
 export function CreateRecipe() {
+  const disableActions = !isAuthenticated();
+  const recipeService = useRecipeService();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recipe, setRecipe] = useState(() =>getBlankRecipe());
   const [errors, setErrors] = useState(() => getBlankErrors());
 
   useEffect(() => {
-    const foundErrors = Object.assign({}, errors);
-
-    if (foundErrors.name.isDirty) {
-      foundErrors.name.isValid = recipe.name.trim() !== "";
-    }
-    
-    if (foundErrors.ingredients.isDirty) {
-      foundErrors.ingredients.isValid = recipe.ingredients.trim() !== "";
-    }
-    
-    if (foundErrors.instructions.isDirty) {
-      foundErrors.instructions.isValid = recipe.instructions.trim() !== "";
-    }
-    
-    setErrors(foundErrors);
+    validateForm(false);
   }, [recipe]);
 
   function getBlankRecipe() {
@@ -61,6 +51,34 @@ export function CreateRecipe() {
         message: "Instructions are required"
       }
     };
+  }
+
+  function validateForm(isSubmitting) {
+    const foundErrors = Object.assign({}, errors);
+
+    if (isSubmitting) {
+      foundErrors.name.isDirty = true;
+      foundErrors.ingredients.isDirty = true;
+      foundErrors.instructions.isDirty = true;
+    }
+
+    if (foundErrors.name.isDirty) {
+      foundErrors.name.isValid = recipe.name.trim() !== "";
+    }
+    
+    if (foundErrors.ingredients.isDirty) {
+      foundErrors.ingredients.isValid = recipe.ingredients.trim() !== "";
+    }
+    
+    if (foundErrors.instructions.isDirty) {
+      foundErrors.instructions.isValid = recipe.instructions.trim() !== "";
+    }
+    
+    setErrors(foundErrors);
+
+    return foundErrors.name.isValid
+      && foundErrors.ingredients.isValid
+      && foundErrors.instructions.isValid;
   }
 
   function handleNameChange(e) {
@@ -125,12 +143,24 @@ export function CreateRecipe() {
     setIsModalOpen(false);
   }
 
-  function createRecipe() {
-    alert("not yet implemented");
-  }
-
   function onCancelClick() {
     setIsModalOpen(true);
+  }
+
+  function createRecipe() {
+    if (validateForm(true)) {
+      recipeService.createRecipe(recipe, (response) => {
+        console.log(response);
+        if (response && response.status === 200) {
+          // TODO: show create message? redirect to all recipes? both?
+        } else {
+          // TODO: display error
+        }
+      }, (error) => {
+        console.log(error);
+        // TODO: display error
+      });
+    }
   }
 
   return (
@@ -181,7 +211,11 @@ export function CreateRecipe() {
           margin="normal"
           variant="outlined" />
         <Divider className="rb-divider" />
-        <Button variant="contained" color="primary" onClick={createRecipe}>
+        <Button
+          variant="contained"
+          color="primary"
+          disabled={disableActions}
+          onClick={createRecipe}>
           Save
         </Button>
         <Button

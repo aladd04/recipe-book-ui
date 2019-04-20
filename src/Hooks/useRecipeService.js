@@ -15,8 +15,15 @@ export function useRecipeService() {
       .catch(handleError);
   }
 
+  function createRecipe(recipe, handleResponse, handleError) {
+    api.post("", recipe)
+      .then(handleResponse)
+      .catch(handleError);
+  }
+
   return {
     getAllRecipes,
-    getRecipeById
+    getRecipeById,
+    createRecipe
   };
 }
