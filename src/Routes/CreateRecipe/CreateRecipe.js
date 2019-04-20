@@ -24,7 +24,7 @@ export function CreateRecipe() {
   const recipeService = useRecipeService();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
-  const [recipe, setRecipe] = useState(() =>getBlankRecipe());
+  const [recipe, setRecipe] = useState(() => getBlankRecipe());
   const [errors, setErrors] = useState(() => getBlankErrors());
 
   useEffect(() => {
@@ -62,30 +62,19 @@ export function CreateRecipe() {
 
   function validateForm(isSubmitting) {
     const foundErrors = Object.assign({}, errors);
+    Object.keys(foundErrors).forEach(k => {
+      if (isSubmitting) {
+        foundErrors[k].isDirty = true;
+      }
 
-    if (isSubmitting) {
-      foundErrors.name.isDirty = true;
-      foundErrors.ingredients.isDirty = true;
-      foundErrors.instructions.isDirty = true;
-    }
+      if (foundErrors[k].isDirty) {
+        foundErrors[k].isValid = recipe[k].trim() !== "";
+      }
+    });
 
-    if (foundErrors.name.isDirty) {
-      foundErrors.name.isValid = recipe.name.trim() !== "";
-    }
-    
-    if (foundErrors.ingredients.isDirty) {
-      foundErrors.ingredients.isValid = recipe.ingredients.trim() !== "";
-    }
-    
-    if (foundErrors.instructions.isDirty) {
-      foundErrors.instructions.isValid = recipe.instructions.trim() !== "";
-    }
-    
     setErrors(foundErrors);
 
-    return foundErrors.name.isValid
-      && foundErrors.ingredients.isValid
-      && foundErrors.instructions.isValid;
+    return Object.keys(foundErrors).every(k => foundErrors[k].isValid);
   }
 
   function handleNameChange(e) {
@@ -97,7 +86,7 @@ export function CreateRecipe() {
     setErrors({
       ...errors,
       name: {
-        ...errors["name"],
+        ...errors.name,
         isDirty: true
       }
     });
@@ -119,7 +108,7 @@ export function CreateRecipe() {
     setErrors({
       ...errors,
       ingredients: {
-        ...errors["ingredients"],
+        ...errors.ingredients,
         isDirty: true
       }
     });
@@ -134,7 +123,7 @@ export function CreateRecipe() {
     setErrors({
       ...errors,
       instructions: {
-        ...errors["instructions"],
+        ...errors.instructions,
         isDirty: true
       }
     });
@@ -175,10 +164,18 @@ export function CreateRecipe() {
     }
   }
 
+  const showValidationSummary = Object.keys(errors)
+    .some(k => !errors[k].isValid);
+
   return (
     <React.Fragment>
       <PageHeader text="Create a new Recipe" />
       <Paper style={{ padding: 12 }}>
+        <div style={showValidationSummary ? {} : { display: "none" }}>
+          <div>{errors.name.message}</div>
+          <div>{errors.ingredients.message}</div>
+          <div>{errors.instructions.message}</div>
+        </div>
         <TextField
           fullWidth
           required
