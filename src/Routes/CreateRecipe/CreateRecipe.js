@@ -6,6 +6,7 @@ import React, {
   useState,
   useEffect
 } from "react";
+import { Link } from "react-router-dom";
 import {
   Paper,
   TextField,
@@ -27,6 +28,7 @@ export function CreateRecipe() {
   const [toastOpen, setToastOpen] = useState(false);
   const [recipe, setRecipe] = useState(() => getBlankRecipe());
   const [errors, setErrors] = useState(() => getBlankErrors());
+  const [newRecipeId, setNewRecipeId] = useState("");
 
   useEffect(() => {
     validateForm(false);
@@ -151,16 +153,16 @@ export function CreateRecipe() {
   function createRecipe() {
     if (validateForm(true)) {
       recipeService.createRecipe(recipe, (response) => {
-        console.log(response);
-        if (response && response.status === 200) {
-          // TODO: show create message? redirect to all recipes? both?
-          // For above, migrate snackbar code to achieve it?
+        if (response && response.status === 200 && response.data) {
+          setNewRecipeId(response.data);
+          setToastOpen(true);
+          setRecipe(getBlankRecipe());
+          setErrors(getBlankErrors());
         } else {
-          // TODO: display error
+          console.log(response);
         }
       }, (error) => {
-        console.log(error);
-        // TODO: display error
+        console.log(error.response);
       });
     }
   }
@@ -254,15 +256,22 @@ export function CreateRecipe() {
         <Snackbar
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           open={toastOpen}
-          autoHideDuration={5000}
-          onClose={handleToastClose}>
+          autoHideDuration={10000}
+          onClose={handleToastClose}
+          style={{ marginTop: 20 }}>
           <SnackbarContent
             style={{ backgroundColor: green[600] }}
             message={
-              <span>
+              <div className="rb-snackbar-message">
                 <CheckCircleIcon />
-                Recipe Created!
-              </span>
+                <span style={{ paddingLeft: 10 }}>Recipe created!</span>
+                <Link
+                  to={`/recipe/${newRecipeId}`}
+                  style={{ padding: "0 4px" }}>
+                  Click here
+                </Link>
+                <span>to view it</span>
+              </div>
             }
             action={
               <IconButton onClick={handleToastClose}>
