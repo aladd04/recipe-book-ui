@@ -89,7 +89,7 @@ main#main-content {
   white-space: pre-wrap;
 }
 
-.rb-recipe-view-action-container {
+.rb-recipe-action-container {
   display: flex;
   flex-direction: row;
   align-items: center;

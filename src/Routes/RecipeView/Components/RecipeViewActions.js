@@ -13,12 +13,7 @@ export function RecipeViewActions(props) {
   const disableActions = !isAuthenticated();
 
   return (
-    <div className="rb-recipe-view-action-container">
-      <RouterLink to="/">
-        <Button size="small" color="primary">
-          To All Recipes
-        </Button>
-      </RouterLink>
+    <div className="rb-recipe-action-container">
       <div>
         <Tooltip
           title="Edit"
@@ -51,6 +46,11 @@ export function RecipeViewActions(props) {
           </Tooltip>
         </span>
       </div>
+      <RouterLink to="/">
+        <Button size="small" color="primary">
+          To All Recipes
+        </Button>
+      </RouterLink>
     </div>
   );
 }
