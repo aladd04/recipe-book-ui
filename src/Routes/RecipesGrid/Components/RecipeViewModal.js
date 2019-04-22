@@ -22,11 +22,12 @@ function RecipeViewModal({ recipe, ...props }) {
         open={props.isModalOpen}
         onClose={props.onCloseModal}
         fullWidth={true}
-        fullScreen={props.fullScreen}>
+        fullScreen={props.fullScreen}
+        scroll="body">
       <DialogTitle disableTypography={true} style={{ paddingBottom: 0 }}>
         <PageHeader text={recipe.name} subText={ownerBlurb} />
       </DialogTitle>
-      <DialogContent>
+      <DialogContent style={{ overflowY: "unset", paddingBottom: 0 }}>
         <RecipeInfo recipe={recipe} setOwnerBlurb={setOwnerBlurb} />
       </DialogContent>
       <DialogActions>

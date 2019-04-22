@@ -7,7 +7,7 @@ import React, {
   useEffect
 } from "react";
 
-export function RecipesGrid() {
+export function RecipesGrid(props) {
   const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
@@ -20,9 +20,16 @@ export function RecipesGrid() {
     });
   }, []);
 
+  function createRecipe() {
+    props.history.push("/recipe/create");
+  }
+
   return (
     <React.Fragment>
-      <PageHeader text="Recipes" />
+      <PageHeader
+        text="Recipes"
+        actionText="Create a new Recipe"
+        actionClick={createRecipe} />
       <LoadingWrapper isLoading={isLoading}>
         <FilterableRecipesGrid allRecipes={allRecipes} />
       </LoadingWrapper>

@@ -45,6 +45,22 @@ main#main-content {
   align-items: center;
 }
 
+.rb-divider {
+  margin: 16px 0 !important;
+}
+
+.rb-page-header-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.rb-page-header-container .rb-page-header-primary {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .rb-no-recipe-results-container {
   display: flex;
   flex-direction: column;
@@ -73,9 +89,22 @@ main#main-content {
   white-space: pre-wrap;
 }
 
-.rb-recipe-view-action-container {
+.rb-recipe-action-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+}
+
+.rb-validation-summary {
+  padding: 10px 10px 10px 0;
+  border: 1px solid #b71c1c;
+  border-radius: 5px;
+  background: rgba(255, 224, 222, 0.5);
+}
+
+.rb-snackbar-message {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
