@@ -3,7 +3,7 @@ import YesNoModal from "../../Shared/YesNoModal";
 import { useRecipeService } from "../../Hooks/useRecipeService";
 import { useRecipeForm } from "../../Hooks/useRecipeForm";
 import { RecipeFormFields } from "./Components/RecipeFormFields";
-import { RecipeCreateActions } from "./Components/RecipeCreateActions";
+import { RecipeFormActions } from "./Components/RecipeFormActions";
 import { RecipeCreatedSnackbar } from "./Components/RecipeCreatedSnackbar";
 import { RecipeValidationSummary } from "./Components/RecipeValidationSummary";
 import React, {
@@ -11,13 +11,15 @@ import React, {
 } from "react";
 import {
   Paper,
-  Divider
+  Divider,
+  LinearProgress
 } from "@material-ui/core";
 
 export function CreateRecipe() {
   const recipeService = useRecipeService();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
   const [newRecipeId, setNewRecipeId] = useState("");
   const recipeForm = useRecipeForm({
     name: "",
@@ -62,6 +64,7 @@ export function CreateRecipe() {
 
   function createRecipe() {
     if (recipeForm.validate(true)) {
+      setIsExecuting(true);
       recipeService.createRecipe(recipeForm.recipe, (response) => {
         if (response && response.status === 200 && response.data) {
           setNewRecipeId(response.data);
@@ -70,8 +73,15 @@ export function CreateRecipe() {
         } else {
           console.log(response);
         }
+
+        setIsExecuting(false);
       }, (error) => {
-        console.log(error.response);
+        console.log(error);
+        if (error.response) {
+          console.log(error.response);
+        }
+
+        setIsExecuting(false);
       });
     }
   }
@@ -89,7 +99,8 @@ export function CreateRecipe() {
           onIngredientsChange={onIngredientsChange}
           onInstructionsChange={onInstructionsChange} />
         <Divider className="rb-divider" />
-        <RecipeCreateActions
+        {isExecuting ? (<LinearProgress />) : (null)}
+        <RecipeFormActions
           onSaveClick={createRecipe}
           onCancelClick={onCancelClick} />
         <YesNoModal

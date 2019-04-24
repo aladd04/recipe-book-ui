@@ -2,11 +2,11 @@ import { isAuthenticated } from "../../../Helpers/authHelper";
 import React from "react";
 import { Button } from "@material-ui/core";
 
-export function RecipeCreateActions(props) {
+export function RecipeFormActions(props) {
   const disableActions = !isAuthenticated();
 
   return (
-    <React.Fragment>
+    <div style={{ marginTop: 10 }}>
       <Button
         variant="contained"
         color="primary"
@@ -20,6 +20,6 @@ export function RecipeCreateActions(props) {
         style={{ marginLeft: 10 }}>
         Cancel
       </Button>
-    </React.Fragment>
+    </div>
   );
 }
