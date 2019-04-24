@@ -32,7 +32,25 @@ export function RecipeView(props) {
   }
 
   function deleteRecipe() {
-    alert("not implemented yet");
+    // TODO: Use Material-UI modal
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      recipeService.deleteRecipe(recipe.id, (response) => {
+        if (response && response.status === 200) {
+          props.history.push("/");
+          // TODO: Redirect to all recipes page and show a message
+        } else {
+          console.log(response);
+        }
+      }, (error) => {
+        console.log(error);
+        if (error.response) {
+          console.log(error.response);
+          if (error.response.status === 404) {
+            props.history.push("/notfound");
+          }
+        }
+      });
+    }
   }
 
   return (
