@@ -44,7 +44,6 @@ export function EditRecipe(props) {
       if (response && response.status === 200) {
         setToastOpen(true);
         setRecipe(updatedRecipe);
-        // TODO: Redirect to view page and show a message
       } else {
         console.log(response);
       }

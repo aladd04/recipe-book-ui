@@ -45,6 +45,13 @@ main#main-content {
   align-items: center;
 }
 
+.paper-actions-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .rb-divider {
   margin: 16px 0 !important;
 }
@@ -84,16 +91,17 @@ main#main-content {
   align-items: center;
 }
 
+.rb-recipe-info {
+  margin-bottom: 12px;
+}
+
+.rb-recipe-info:last-child {
+  margin-bottom: 0;
+}
+
 .rb-recipe-info .rb-recipe-info-body {
   margin-left: 16px;
   white-space: pre-wrap;
-}
-
-.rb-recipe-action-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .rb-validation-summary {

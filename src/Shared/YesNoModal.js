@@ -34,7 +34,7 @@ function YesNoModal({ isOpen, onYes, onNo, title, question, ...props}) {
 }
 
 YesNoModal.propTypes = {
-  fullScreen: PropTypes.bool.isRequired,
+  fullScreen: PropTypes.bool.isRequired
 };
 
 export default withMobileDialog({breakpoint: "sm"})(YesNoModal);
