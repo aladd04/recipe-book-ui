@@ -4,7 +4,7 @@ export function useRecipeService() {
   const api = useAxiosApi("Recipe");
 
   function getAllRecipes(handleResponse, handleError) {
-    api.get()
+    api.get("/")
       .then(handleResponse)
       .catch(handleError);
   }
@@ -16,14 +16,28 @@ export function useRecipeService() {
   }
 
   function createRecipe(recipe, handleResponse, handleError) {
-    api.post("", recipe)
+    api.post("/", recipe)
       .then(handleResponse)
       .catch(handleError);
+  }
+
+  function updateRecipe(id, recipe, handleResponse, handleError) {
+    api.put(`/${id}`, recipe)
+      .then(handleResponse)
+      .catch(handleError);
+  }
+
+  function deleteRecipe(id, handleResponse, handleError) {
+    api.delete(`/${id}`)
+      .then(handleResponse)
+      .catch(handleError)
   }
 
   return {
     getAllRecipes,
     getRecipeById,
-    createRecipe
+    createRecipe,
+    updateRecipe,
+    deleteRecipe
   };
 }

@@ -1,16 +1,26 @@
 import { useRecipeService } from "../../Hooks/useRecipeService";
-import { PageHeader } from "../../Shared/PageHeader";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
+import { RecipeForm } from "../CreateRecipe/Components/RecipeForm";
+import { 
+  RecipeSavedSnackbar
+} from "../CreateRecipe/Components/RecipeSavedSnackbar";
 import React, {
   useState,
   useEffect
 } from "react";
-import { Paper } from "@material-ui/core";
 
 export function EditRecipe(props) {
   const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
-  const [recipe, setRecipe] = useState({ name: "" });
+  const [toastOpen, setToastOpen] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [recipe, setRecipe] = useState({
+    id: "",
+    name: "",
+    description: "",
+    ingredients: "",
+    instructions: ""
+  });
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,13 +34,43 @@ export function EditRecipe(props) {
     });
   }, []);
 
+  function onToastClose() {
+    setToastOpen(false);
+  }
+
+  function saveRecipe(updatedRecipe) {
+    setIsExecuting(true);
+    recipeService.updateRecipe(recipe.id, updatedRecipe, (response) => {
+      if (response && response.status === 200) {
+        setToastOpen(true);
+        setRecipe(updatedRecipe);
+      } else {
+        console.log(response);
+      }
+
+      setIsExecuting(false);
+    }, (error) => {
+      console.log(error);
+      if (error.response) {
+        console.log(error.response);
+      }
+
+      setIsExecuting(false);
+    });
+  }
+
   return (
     <React.Fragment>
-      <PageHeader text={`Edit ${recipe.name}`} />
       <LoadingWrapper isLoading={isLoading}>
-        <Paper style={{ padding: 12 }}>
-          Edit this recipe
-        </Paper>
+        <RecipeForm
+          pageTitle={`Edit ${recipe.name}`}
+          recipe={recipe}
+          onSaveClick={saveRecipe}
+          isSaveExecuting={isExecuting} />
+        <RecipeSavedSnackbar
+          toastOpen={toastOpen}
+          onToastClose={onToastClose}
+          recipeId={recipe.id} />
       </LoadingWrapper>
     </React.Fragment>
   );

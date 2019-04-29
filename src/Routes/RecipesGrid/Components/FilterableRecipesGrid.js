@@ -9,21 +9,23 @@ import {
   Paper
 } from "@material-ui/core";
 
-export function FilterableRecipesGrid({ allRecipes }) {
-  const [matchingRecipes, setMatchingRecipes] = useState([...allRecipes]);
+export function FilterableRecipesGrid(props) {
   const [nameQuery, setNameQuery] = useState("");
+  const [matchingRecipes, setMatchingRecipes] = useState(() => {
+    sortRecipesByName(props.allRecipes);
+    return props.allRecipes;
+  });
 
   useEffect(() => {
-    let workingRecipes = [...allRecipes];
+    let workingRecipes = [...props.allRecipes];
 
-    if (nameQuery !== "") {
+    if (nameQuery) {
       workingRecipes = workingRecipes.filter(r => {
         return r.name.toLowerCase().includes(nameQuery.toLowerCase());
       });
     }
 
     sortRecipesByName(workingRecipes);
-
     setMatchingRecipes(workingRecipes);
   }, [nameQuery]);
 

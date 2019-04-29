@@ -1,5 +1,6 @@
 import { isAuthenticated } from "../../../Helpers/authHelper";
 import { RouterLink } from "../../../Shared/RouterLink";
+import { PaperActions } from "../../../Shared/PaperActions";
 import React from "react";
 import {
   Button,
@@ -13,25 +14,25 @@ export function RecipeViewActions(props) {
   const disableActions = !isAuthenticated();
 
   return (
-    <div className="rb-recipe-action-container">
-      <div>
-        <Tooltip
-          title="Edit"
-          placement="bottom"
-          disableHoverListener={disableActions}>
-          <span style={{ marginRight: 10 }}>
-            <Fab
-              color="primary"
-              size="small"
-              onClick={props.editRecipe}
-              disabled={disableActions}>
-              <EditIcon />
-            </Fab>
-          </span>
-        </Tooltip>
-        <span>
+    <PaperActions
+      left={
+        <React.Fragment>
           <Tooltip
-            title="Delete Recipe"
+            title="Edit"
+            placement="bottom"
+            disableHoverListener={disableActions}>
+            <span style={{ marginRight: 10 }}>
+              <Fab
+                color="primary"
+                size="small"
+                onClick={props.editRecipe}
+                disabled={disableActions}>
+                <EditIcon />
+              </Fab>
+            </span>
+          </Tooltip>
+          <Tooltip
+            title="Delete"
             placement="bottom"
             disableHoverListener={disableActions}>
             <span>
@@ -44,13 +45,14 @@ export function RecipeViewActions(props) {
               </Fab>
             </span>
           </Tooltip>
-        </span>
-      </div>
-      <RouterLink to="/">
-        <Button size="small" color="primary">
-          To All Recipes
-        </Button>
-      </RouterLink>
-    </div>
+        </React.Fragment>
+      }
+      right={
+        <RouterLink to="/">
+          <Button size="small" color="primary">
+            To All Recipes
+          </Button>
+        </RouterLink>
+      } />
   );
 }
