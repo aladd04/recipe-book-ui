@@ -1,5 +1,8 @@
 import { NavigationDrawer } from "./NavigationDrawer";
-import { isAuthenticated } from "../Helpers/authHelper";
+import {
+  isAuthenticated,
+  getUser
+} from "../Helpers/authHelper";
 import React, {
   useState
 } from "react";
@@ -16,6 +19,7 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 export function Menu() {
+  const isSignedIn = isAuthenticated();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const alwaysActions = [{
@@ -54,17 +58,20 @@ export function Menu() {
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}
-        otherActions={isAuthenticated()
-          ? signedInActions
-          : signedOutActions} />
+        otherActions={isSignedIn ? signedInActions : signedOutActions} />
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-            KatieMae's Recipe Book
+            Recipe Book
           </Typography>
+          {!isAuthenticated ? null : (
+            <Typography variant="h6" color="inherit">
+              Hello, {getUser().firstName}!
+            </Typography>
+          )}
         </Toolbar>
       </AppBar>
     </React.Fragment>

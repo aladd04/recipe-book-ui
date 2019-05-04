@@ -38,13 +38,7 @@ export function FilterableRecipesGrid(props) {
       var nameA = a.name.toLowerCase();
       var nameB = b.name.toLowerCase();
 
-      if (nameA < nameB) {
-        return -1;
-      } else if (nameA > nameB) {
-        return 1;
-      }
-
-      return 0;
+      return (nameA < nameB ? -1 : (nameA > nameB ? 1 : 0));
     });
   }
 
