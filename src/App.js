@@ -15,7 +15,7 @@ import {
   Route
 } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import "./site.css";
+import "./site.scss";
 
 export default function App() {
   return (
