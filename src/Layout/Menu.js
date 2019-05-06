@@ -1,8 +1,5 @@
 import { NavigationDrawer } from "./NavigationDrawer";
-import {
-  isAuthenticated,
-  getUser
-} from "../Helpers/authHelper";
+import { getUserFromToken } from "../Helpers/authHelper";
 import React, {
   useState
 } from "react";
@@ -19,7 +16,7 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 export function Menu() {
-  const isSignedIn = isAuthenticated();
+  const user = getUserFromToken();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const alwaysActions = [{
@@ -58,7 +55,7 @@ export function Menu() {
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}
-        otherActions={isSignedIn ? signedInActions : signedOutActions} />
+        otherActions={user.isLoggedIn ? signedInActions : signedOutActions} />
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>
@@ -67,9 +64,9 @@ export function Menu() {
           <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
             Recipe Book
           </Typography>
-          {!isAuthenticated ? null : (
+          {!user.isLoggedIn ? null : (
             <Typography variant="h6" color="inherit">
-              Hello, {getUser().firstName}!
+              Hello, {user.info.firstName}!
             </Typography>
           )}
         </Toolbar>

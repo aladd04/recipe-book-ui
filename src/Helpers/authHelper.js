@@ -3,10 +3,6 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 import { DateTime } from "luxon";
 
-export function getToken() {
-  return Cookies.get(AuthTokenKey);
-}
-
 export function setToken(token) {
   const decodedToken = jwt.decode(token);
   const expireDate = DateTime.fromMillis(decodedToken.exp * 1000);
@@ -18,23 +14,25 @@ export function removeToken() {
   Cookies.remove(AuthTokenKey);
 }
 
-export function isAuthenticated() {
-  return !!getToken();
-}
+export function getUserFromToken() {
+  const token = Cookies.get(AuthTokenKey);
+  const user = {
+    isLoggedIn: !!token,
+    info: null
+  };
 
-export function getUser() {
-  if (!isAuthenticated()) {
-    return null;
+  if (user.isLoggedIn) {
+    const decodedToken = jwt.decode(token);
+
+    user.info = {
+      id: decodedToken.Id,
+      email: decodedToken.EmailAddress,
+      firstName: decodedToken.FirstName,
+      lastName: decodedToken.LastName,
+      isAdmin: decodedToken.IsAdmin,
+      authToken: token
+    };
   }
 
-  const token = getToken();
-  const decodedToken = jwt.decode(token);
-
-  return {
-    encryptedUserId: decodedToken.Id,
-    email: decodedToken.EmailAddress,
-    firstName: decodedToken.FirstName,
-    lastName: decodedToken.LastName,
-    isAdmin: decodedToken.IsAdmin
-  };
+  return user;
 }

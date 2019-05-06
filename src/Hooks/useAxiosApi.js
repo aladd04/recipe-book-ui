@@ -1,8 +1,5 @@
 import { ApiUrl } from "../config";
-import {
-  isAuthenticated,
-  getToken
-} from "../Helpers/authHelper";
+import { getUserFromToken } from "../Helpers/authHelper";
 import {
   useState,
   useEffect
@@ -10,23 +7,25 @@ import {
 import axios from "axios";
 
 export function useAxiosApi(resource) {
-  const [api] = useState(() => initializeApi());
+  const [api] = useState(() => {
+    return axios.create({
+      baseURL: `${ApiUrl}/${resource}`
+    });
+  });
 
   useEffect(() => {
-    if (isAuthenticated()) {
+    const user = getUserFromToken();
+
+    if (user.isLoggedIn) {
+      const bearerAuthToken = `Bearer ${user.info.authToken}`;
+
       api.defaults.withCredentials = true;
-      api.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
+      api.defaults.headers.common["Authorization"] = bearerAuthToken;
     } else {
       api.defaults.withCredentials = false;
       api.defaults.headers.common["Authorization"] = null;
     }
   });
-
-  function initializeApi() {
-    return axios.create({
-      baseURL: `${ApiUrl}/${resource}`
-    });
-  }
 
   return api;
 }
