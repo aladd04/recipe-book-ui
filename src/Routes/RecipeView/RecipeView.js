@@ -1,4 +1,4 @@
-import { useRecipeService } from "../../Hooks/useRecipeService";
+import recipeService from "../../Services/recipeService";
 import { PageHeader } from "../../Shared/PageHeader";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { RecipeInfo } from "./Components/RecipeInfo";
@@ -11,7 +11,6 @@ import React, {
 import { Paper } from "@material-ui/core";
 
 export function RecipeView(props) {
-  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [recipe, setRecipe] = useState({ name: "" });
   const [ownerBlurb, setOwnerBlurb] = useState("");

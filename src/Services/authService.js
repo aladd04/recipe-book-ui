@@ -1,29 +1,27 @@
-import { useAxiosApi } from "../Hooks/useAxiosApi";
-import {
-  setToken,
-  removeToken
-} from "../Helpers/authHelper";
+import { createAxiosApi } from "../Helpers/axiosApiHelper";
+import authHelper from "../Helpers/authHelper";
 
-export function useAuthService() {
-  const api = useAxiosApi("Auth");
+function createAuthService() {
+  const resource = "Auth";
 
   function login(token, handleResponse, handleError) {
     const body = {
       token: token
     };
-  
-    api.post("/login", body)
+
+    createAxiosApi(resource)
+      .post("/login", body)
       .then((response) => {
         if (response && response.status === 200 && response.data.token) {
-          setToken(response.data.token);
+          authHelper.setUserToken(response.data.token);
           handleResponse(true);
         } else {
-          removeToken();
+          logout();
           handleResponse(false);
         }
       })
       .catch((error) => {
-        removeToken();
+        logout();
         if (handleError) {
           handleError(error);
         }
@@ -31,7 +29,7 @@ export function useAuthService() {
   }
 
   function logout() {
-    removeToken();
+    authHelper.removeUserToken();
   }
 
   return {
@@ -39,3 +37,6 @@ export function useAuthService() {
     logout
   };
 }
+
+const authService = createAuthService();
+export default authService;

@@ -1,4 +1,4 @@
-import { getUserFromToken } from "../../../Helpers/authHelper";
+import authHelper from "../../../Helpers/authHelper";
 import { RouterLink } from "../../../Shared/RouterLink";
 import { PaperActions } from "../../../Shared/PaperActions";
 import React from "react";
@@ -11,7 +11,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 export function RecipeViewActions(props) {
-  const user = getUserFromToken();
+  const user = authHelper.getCurrentUser();
 
   return (
     <PaperActions

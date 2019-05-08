@@ -1,5 +1,5 @@
+import authHelper from "../Helpers/authHelper";
 import { NavigationDrawer } from "./NavigationDrawer";
-import { getUserFromToken } from "../Helpers/authHelper";
 import React, {
   useState
 } from "react";
@@ -16,7 +16,7 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 export function Menu() {
-  const user = getUserFromToken();
+  const user = authHelper.getCurrentUser();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const alwaysActions = [{
