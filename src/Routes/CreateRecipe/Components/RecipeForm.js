@@ -52,7 +52,7 @@ export function RecipeForm(props) {
   }
 
   function onSaveClick() {
-    if (recipeForm.validate(true)) {
+    if (recipeForm.isValid()) {
       props.onSaveClick(recipeForm.recipe);
     }
   }
