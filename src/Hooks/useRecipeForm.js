@@ -24,9 +24,18 @@ export function useRecipeForm(initialRecipe) {
     return Object.keys(foundErrors).every(k => foundErrors[k].isValid);
   }, [recipe, errors]);
 
+  const resetCallback = useCallback(() => {
+    setRecipe(initialRecipe);
+    setErrors(getBlankErrors());
+  }, [initialRecipe]);
+
   useEffect(() => {
     validateCallback(false);
   }, [validateCallback]);
+
+  useEffect(() => {
+    resetCallback();
+  }, [resetCallback]);
 
   function getBlankErrors() {
     return {
@@ -59,11 +68,6 @@ export function useRecipeForm(initialRecipe) {
     return validateCallback(true);
   }
 
-  function reset() {
-    setRecipe(initialRecipe);
-    setErrors(getBlankErrors());
-  }
-
   function handleNameChange(value) {
     setRecipe({ ...recipe, name: value });
     markFieldDirty("name");
@@ -87,7 +91,7 @@ export function useRecipeForm(initialRecipe) {
     recipe,
     errors,
     isValid,
-    reset,
+    reset: resetCallback,
     handleNameChange,
     handleDescriptionChange,
     handleIngredientsChange,

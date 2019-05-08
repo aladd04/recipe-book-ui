@@ -26,7 +26,7 @@ export function RecipeView(props) {
         props.history.push("/notfound");
       }
     });
-  }, []);
+  }, [props.match.params.id, props.history]);
 
   function confirmDeleteRequest() {
     setIsModalOpen(true);

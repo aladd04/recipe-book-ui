@@ -31,7 +31,7 @@ export function EditRecipe(props) {
         props.history.push("/notfound");
       }
     });
-  }, []);
+  }, [props.match.params.id, props.history]);
 
   function onToastClose() {
     setToastOpen(false);

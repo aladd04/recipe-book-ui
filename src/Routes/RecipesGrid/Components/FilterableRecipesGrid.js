@@ -27,7 +27,7 @@ export function FilterableRecipesGrid(props) {
 
     sortRecipesByName(workingRecipes);
     setMatchingRecipes(workingRecipes);
-  }, [nameQuery]);
+  }, [nameQuery, props.allRecipes]);
 
   function handleSearchQueryChange(newNameQuery) {
     setNameQuery(newNameQuery);

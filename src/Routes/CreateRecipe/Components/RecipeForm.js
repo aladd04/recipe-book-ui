@@ -5,8 +5,7 @@ import { RecipeFormFields } from "./RecipeFormFields";
 import { RecipeFormActions } from "./RecipeFormActions";
 import { RecipeValidationSummary } from "./RecipeValidationSummary";
 import React, {
-  useState,
-  useEffect
+  useState
 } from "react";
 import {
   Paper,
@@ -17,10 +16,6 @@ import {
 export function RecipeForm(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const recipeForm = useRecipeForm(props.recipe);
-
-  useEffect(() => {
-    recipeForm.reset();
-  }, [props.recipe]);
 
   function onNameChange(e) {
     recipeForm.handleNameChange(e.target.value);
