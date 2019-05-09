@@ -1,4 +1,4 @@
-import { useRecipeService } from "../../Hooks/useRecipeService";
+import recipeService from "../../Services/recipeService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { RecipeForm } from "../CreateRecipe/Components/RecipeForm";
 import { 
@@ -10,7 +10,6 @@ import React, {
 } from "react";
 
 export function EditRecipe(props) {
-  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [toastOpen, setToastOpen] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
@@ -32,7 +31,7 @@ export function EditRecipe(props) {
         props.history.push("/notfound");
       }
     });
-  }, []);
+  }, [props.match.params.id, props.history]);
 
   function onToastClose() {
     setToastOpen(false);

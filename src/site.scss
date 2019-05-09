@@ -60,14 +60,14 @@ main#main-content {
 
 .rb-page-header-container {
   display: flex;
-	flex-direction: column;
-	
-	.rb-page-header-primary {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-	}
+  flex-direction: column;
+  
+  .rb-page-header-primary {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .rb-no-recipe-results-container {
@@ -84,26 +84,26 @@ main#main-content {
 .rb-paginator {
   display: flex;
   align-items: center;
-	justify-content: space-between;
-	
-	.rb-paginator-help-text {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
+  justify-content: space-between;
+  
+  .rb-paginator-help-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .rb-recipe-info {
-	margin-bottom: 12px;
-	
-	&:last-child {
-		margin-bottom: 0;
-	}
-	
-	.rb-recipe-info-body {
-		margin-left: 16px;
-		white-space: pre-wrap;
-	}
+  margin-bottom: 12px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  .rb-recipe-info-body {
+    margin-left: 16px;
+    white-space: pre-wrap;
+  }
 }
 
 .rb-validation-summary {

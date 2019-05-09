@@ -1,4 +1,4 @@
-import { useRecipeService } from "../../Hooks/useRecipeService";
+import recipeService from "../../Services/recipeService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { PageHeader } from "../../Shared/PageHeader";
 import { FilterableRecipesGrid } from "./Components/FilterableRecipesGrid";
@@ -8,7 +8,6 @@ import React, {
 } from "react";
 
 export function RecipesGrid(props) {
-  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
 

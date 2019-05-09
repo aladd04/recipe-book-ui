@@ -1,15 +1,41 @@
 import {
   useState,
-  useEffect
+  useEffect,
+  useCallback
 } from "react";
 
 export function useRecipeForm(initialRecipe) {
   const [recipe, setRecipe] = useState(initialRecipe);
   const [errors, setErrors] = useState(() => getBlankErrors());
 
+  const validateCallback = useCallback((markAllDirty) => {
+    const foundErrors = Object.assign({}, errors);
+    Object.keys(foundErrors).forEach(k => {
+      if (markAllDirty) {
+        foundErrors[k].isDirty = true;
+      }
+
+      if (foundErrors[k].isDirty) {
+        foundErrors[k].isValid = recipe[k].trim() !== "";
+      }
+    });
+
+    setErrors(foundErrors);
+    return Object.keys(foundErrors).every(k => foundErrors[k].isValid);
+  }, [recipe, errors]);
+
+  const resetCallback = useCallback(() => {
+    setRecipe(initialRecipe);
+    setErrors(getBlankErrors());
+  }, [initialRecipe]);
+
   useEffect(() => {
-    validate(false);
-  }, [recipe]);
+    validateCallback(false);
+  }, [validateCallback]);
+
+  useEffect(() => {
+    resetCallback();
+  }, [resetCallback]);
 
   function getBlankErrors() {
     return {
@@ -38,29 +64,12 @@ export function useRecipeForm(initialRecipe) {
     setErrors(updatingErrors);
   }
 
-  function reset() {
-    setRecipe(initialRecipe);
-    setErrors(getBlankErrors());
-  }
-
-  function validate(markAllDirty) {
-    const foundErrors = Object.assign({}, errors);
-    Object.keys(foundErrors).forEach(k => {
-      if (markAllDirty) {
-        foundErrors[k].isDirty = true;
-      }
-
-      if (foundErrors[k].isDirty) {
-        foundErrors[k].isValid = recipe[k].trim() !== "";
-      }
-    });
-
-    setErrors(foundErrors);
-    return Object.keys(foundErrors).every(k => foundErrors[k].isValid);
+  function isValid() {
+    return validateCallback(true);
   }
 
   function handleNameChange(value) {
-    setRecipe({ ...recipe, name: value});
+    setRecipe({ ...recipe, name: value });
     markFieldDirty("name");
   }
 
@@ -81,8 +90,8 @@ export function useRecipeForm(initialRecipe) {
   return {
     recipe,
     errors,
-    validate,
-    reset,
+    isValid,
+    reset: resetCallback,
     handleNameChange,
     handleDescriptionChange,
     handleIngredientsChange,

@@ -1,5 +1,5 @@
 import { GoogleClientId } from "../../config";
-import { useAuthService } from "../../Hooks/useAuthService";
+import authService from "../../Services/authService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import React, {
   useState
@@ -14,9 +14,8 @@ import {
 import { GoogleLogin } from "react-google-login";
 
 export function Login(props) {
-  const authService = useAuthService();
   const [isLoading, setIsLoading] = useState(false);
-
+  
   function handleGoogleSuccessResponse(response) {
     setIsLoading(true);
     authService.login(response.tokenId, (isSuccess) => {

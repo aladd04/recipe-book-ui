@@ -1,10 +1,10 @@
-import { getUserFromToken } from "../../../Helpers/authHelper";
+import authHelper from "../../../Helpers/authHelper";
 import { PaperActions } from "../../../Shared/PaperActions";
 import React from "react";
 import { Button } from "@material-ui/core";
 
 export function RecipeFormActions(props) {
-  const user = getUserFromToken();
+  const user = authHelper.getCurrentUser();
 
   return (
     <PaperActions

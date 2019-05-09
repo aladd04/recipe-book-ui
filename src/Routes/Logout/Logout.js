@@ -1,4 +1,4 @@
-import { useAuthService } from "../../Hooks/useAuthService";
+import authService from "../../Services/authService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import React, {
   useState,
@@ -7,7 +7,6 @@ import React, {
 import { Redirect } from "react-router-dom";
 
 export function Logout() {
-  const authService = useAuthService();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

@@ -1,34 +1,39 @@
-import { useAxiosApi } from "../Hooks/useAxiosApi";
+import { createAxiosApi } from "../Helpers/axiosApiHelper";
 
-export function useRecipeService() {
-  const api = useAxiosApi("Recipe");
+function createRecipeService() {
+  const resource = "Recipe";
 
   function getAllRecipes(handleResponse, handleError) {
-    api.get("/")
+    createAxiosApi(resource)
+      .get("/")
       .then(handleResponse)
       .catch(handleError);
   }
 
   function getRecipeById(id, handleResponse, handleError) {
-    api.get(`/${id}`)
+    createAxiosApi(resource)
+      .get(`/${id}`)
       .then(handleResponse)
       .catch(handleError);
   }
 
   function createRecipe(recipe, handleResponse, handleError) {
-    api.post("/", recipe)
+    createAxiosApi(resource)
+      .post("/", recipe)
       .then(handleResponse)
       .catch(handleError);
   }
 
   function updateRecipe(id, recipe, handleResponse, handleError) {
-    api.put(`/${id}`, recipe)
+    createAxiosApi(resource)
+      .put(`/${id}`, recipe)
       .then(handleResponse)
       .catch(handleError);
   }
 
   function deleteRecipe(id, handleResponse, handleError) {
-    api.delete(`/${id}`)
+    createAxiosApi(resource)
+      .delete(`/${id}`)
       .then(handleResponse)
       .catch(handleError)
   }
@@ -41,3 +46,6 @@ export function useRecipeService() {
     deleteRecipe
   };
 }
+
+const recipeService = createRecipeService();
+export default recipeService;

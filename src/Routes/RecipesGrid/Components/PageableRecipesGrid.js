@@ -7,7 +7,8 @@ import { ClientSidePaginator } from "../../../Shared/ClientSidePaginator";
 import { RecipeGridCard } from "./RecipeGridCard";
 import React, {
   useEffect,
-  useReducer
+  useReducer,
+  useCallback
 } from "react";
 import {
   Grid,
@@ -16,22 +17,22 @@ import {
 import MoodBadIcon from "@material-ui/icons/MoodBad";
 
 export function PageableRecipesGrid({ recipes }) {
-  const [state, dispatch] = useReducer(
-    reducer,
-    createInitialState(),
-    setInitialState
-  );
-
-  useEffect(() => {
-    dispatch({ type: actionType.reset, payload: createInitialState() });
-  }, [recipes]);
-
-  function createInitialState() {
+  const createInitialStateCallback = useCallback(() => {
     return {
       pageSize: 6,
       data: [...recipes]
     };
-  }
+  }, [recipes]);
+
+  const [state, dispatch] = useReducer(
+    reducer,
+    createInitialStateCallback(),
+    setInitialState
+  );
+
+  useEffect(() => {
+    dispatch({ type: actionType.reset, payload: createInitialStateCallback() });
+  }, [createInitialStateCallback]);
 
   function goToNextPage() {
     dispatch({ type: actionType.nextPage });
