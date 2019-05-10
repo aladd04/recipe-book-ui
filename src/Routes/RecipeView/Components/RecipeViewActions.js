@@ -1,4 +1,4 @@
-import authHelper from "../../../Helpers/authHelper";
+import { useUserContext } from "../../../Hooks/useUserContext";
 import { RouterLink } from "../../../Shared/RouterLink";
 import { PaperActions } from "../../../Shared/PaperActions";
 import React from "react";
@@ -11,7 +11,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 export function RecipeViewActions(props) {
-  const user = authHelper.getCurrentUser();
+  const userContext = useUserContext();
+  const user = userContext.value;
 
   return (
     <PaperActions

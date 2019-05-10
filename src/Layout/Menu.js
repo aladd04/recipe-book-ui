@@ -1,7 +1,8 @@
-import authHelper from "../Helpers/authHelper";
+import { UserContext } from "../Contexts/UserContext";
 import { NavigationDrawer } from "./NavigationDrawer";
 import React, {
-  useState
+  useState,
+  useContext
 } from "react";
 import {
   AppBar,
@@ -16,33 +17,30 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 export function Menu() {
-  const user = authHelper.getCurrentUser();
+  const [user] = useContext(UserContext);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const alwaysActions = [{
-      text: "Recipes",
-      url: "/",
-      icon: <FastFoodIcon />
-    }
-  ];
+    text: "Recipes",
+    url: "/",
+    icon: <FastFoodIcon />
+  }];
 
   const signedOutActions = [{
-      text: "Login",
-      url: "/login",
-      icon: <ArrowForward />
-    }
-  ];
+    text: "Login",
+    url: "/login",
+    icon: <ArrowForward />
+  }];
 
   const signedInActions = [{
-      text: "Settings",
-      url: "/settings",
-      icon: <SettingsIcon />
-    }, {
-      text: "Logout",
-      url: "/logout",
-      icon: <ArrowBack />
-    }
-  ];
+    text: "Settings",
+    url: "/settings",
+    icon: <SettingsIcon />
+  }, {
+    text: "Logout",
+    url: "/logout",
+    icon: <ArrowBack />
+  }];
 
   function toggleDrawer() {
     setIsOpenDrawer(!isOpenDrawer);
