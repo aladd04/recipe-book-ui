@@ -1,3 +1,5 @@
+$layout-padding-size: 24px;
+
 #root {
   display: flex;
   flex-direction: column;
@@ -8,14 +10,14 @@ main#main-content {
   position: relative;
   max-width: 1170px;
   margin: auto;
-  padding: 24px;
+  padding: $layout-padding-size;
   width: 100%;
   flex-grow: 1;
 }
 
 .footer-container {
   color: #fff;
-  padding: 24px 0;
+  padding: $layout-padding-size 0;
   box-shadow:
     0px -2px 4px -1px rgba(0,0,0,0.2),
     0px -4px 5px 0px rgba(0,0,0,0.14),
@@ -59,13 +61,13 @@ main#main-content {
 .rb-page-header-container {
   display: flex;
   flex-direction: column;
-}
-
-.rb-page-header-container .rb-page-header-primary {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  
+  .rb-page-header-primary {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .rb-no-recipe-results-container {
@@ -83,25 +85,25 @@ main#main-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.rb-paginator .rb-paginator-help-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  
+  .rb-paginator-help-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .rb-recipe-info {
   margin-bottom: 12px;
-}
-
-.rb-recipe-info:last-child {
-  margin-bottom: 0;
-}
-
-.rb-recipe-info .rb-recipe-info-body {
-  margin-left: 16px;
-  white-space: pre-wrap;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  .rb-recipe-info-body {
+    margin-left: 16px;
+    white-space: pre-wrap;
+  }
 }
 
 .rb-validation-summary {

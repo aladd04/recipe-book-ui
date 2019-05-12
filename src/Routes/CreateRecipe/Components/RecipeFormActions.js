@@ -1,10 +1,10 @@
-import { isAuthenticated } from "../../../Helpers/authHelper";
+import { useUser } from "../../../Hooks/useUser";
 import { PaperActions } from "../../../Shared/PaperActions";
 import React from "react";
 import { Button } from "@material-ui/core";
 
 export function RecipeFormActions(props) {
-  const disableActions = !isAuthenticated();
+  const user = useUser();
 
   return (
     <PaperActions
@@ -14,7 +14,7 @@ export function RecipeFormActions(props) {
           <Button
             variant="contained"
             color="primary"
-            disabled={disableActions}
+            disabled={!user.isLoggedIn}
             onClick={props.onSaveClick}>
             Save
           </Button>

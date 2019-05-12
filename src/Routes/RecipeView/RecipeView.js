@@ -27,7 +27,7 @@ export function RecipeView(props) {
         props.history.push("/notfound");
       }
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function confirmDeleteRequest() {
     setIsModalOpen(true);

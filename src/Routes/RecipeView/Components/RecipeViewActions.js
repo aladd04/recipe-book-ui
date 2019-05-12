@@ -1,4 +1,4 @@
-import { isAuthenticated } from "../../../Helpers/authHelper";
+import { useUser } from "../../../Hooks/useUser";
 import { RouterLink } from "../../../Shared/RouterLink";
 import { PaperActions } from "../../../Shared/PaperActions";
 import React from "react";
@@ -11,7 +11,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 export function RecipeViewActions(props) {
-  const disableActions = !isAuthenticated();
+  const user = useUser();
 
   return (
     <PaperActions
@@ -20,13 +20,13 @@ export function RecipeViewActions(props) {
           <Tooltip
             title="Edit"
             placement="bottom"
-            disableHoverListener={disableActions}>
+            disableHoverListener={!user.isLoggedIn}>
             <span style={{ marginRight: 10 }}>
               <Fab
                 color="primary"
                 size="small"
                 onClick={props.editRecipe}
-                disabled={disableActions}>
+                disabled={!user.isLoggedIn}>
                 <EditIcon />
               </Fab>
             </span>
@@ -34,13 +34,13 @@ export function RecipeViewActions(props) {
           <Tooltip
             title="Delete"
             placement="bottom"
-            disableHoverListener={disableActions}>
+            disableHoverListener={!user.isLoggedIn}>
             <span>
               <Fab
                 color="secondary"
                 size="small"
                 onClick={props.deleteRecipe}
-                disabled={disableActions}>
+                disabled={!user.isLoggedIn}>
                 <DeleteIcon />
               </Fab>
             </span>

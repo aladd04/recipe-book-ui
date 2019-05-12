@@ -1,3 +1,4 @@
+import { UserContextProvider } from "./Contexts/UserContext";
 import { Menu } from "./Layout/Menu";
 import { Footer } from "./Layout/Footer";
 import { RecipesGrid } from "./Routes/RecipesGrid/RecipesGrid";
@@ -15,25 +16,27 @@ import {
   Route
 } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import "./site.css";
+import "./Content/site.scss";
 
 export default function App() {
   return (
     <BrowserRouter>
       <CssBaseline />
-      <Menu />
-      <main id="main-content">
-        <Switch>
-          <Route exact path="/" component={RecipesGrid} />
-          <Route exact path="/recipe/create" component={CreateRecipe} />
-          <Route exact path="/recipe/:id" component={RecipeView} />
-          <Route exact path="/recipe/:id/edit" component={EditRecipe} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/logout" component={Logout} />
-          <Route component={RouteNotFound} />
-        </Switch>
-      </main>
-      <Footer />
+      <UserContextProvider>
+        <Menu />
+        <main id="main-content">
+          <Switch>
+            <Route exact path="/" component={RecipesGrid} />
+            <Route exact path="/recipe/create" component={CreateRecipe} />
+            <Route exact path="/recipe/:id" component={RecipeView} />
+            <Route exact path="/recipe/:id/edit" component={EditRecipe} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
+            <Route component={RouteNotFound} />
+          </Switch>
+        </main>
+        <Footer />
+      </UserContextProvider>
     </BrowserRouter>
   );
 }

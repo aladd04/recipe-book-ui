@@ -1,5 +1,5 @@
+import { useUser } from "../Hooks/useUser";
 import { NavigationDrawer } from "./NavigationDrawer";
-import { isAuthenticated } from "../Helpers/authHelper";
 import React, {
   useState
 } from "react";
@@ -17,31 +17,29 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 
 export function Menu() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const user = useUser();
 
   const alwaysActions = [{
-      text: "Recipes",
-      url: "/",
-      icon: <FastFoodIcon />
-    }
-  ];
+    text: "Recipes",
+    url: "/",
+    icon: <FastFoodIcon />
+  }];
 
   const signedOutActions = [{
-      text: "Login",
-      url: "/login",
-      icon: <ArrowForward />
-    }
-  ];
+    text: "Login",
+    url: "/login",
+    icon: <ArrowForward />
+  }];
 
   const signedInActions = [{
-      text: "Settings",
-      url: "/settings",
-      icon: <SettingsIcon />
-    }, {
-      text: "Logout",
-      url: "/logout",
-      icon: <ArrowBack />
-    }
-  ];
+    text: "Settings",
+    url: "/settings",
+    icon: <SettingsIcon />
+  }, {
+    text: "Logout",
+    url: "/logout",
+    icon: <ArrowBack />
+  }];
 
   function toggleDrawer() {
     setIsOpenDrawer(!isOpenDrawer);
@@ -54,17 +52,20 @@ export function Menu() {
         isOpen={isOpenDrawer}
         toggleOpen={toggleDrawer}
         primaryActions={alwaysActions}
-        otherActions={isAuthenticated()
-          ? signedInActions
-          : signedOutActions} />
+        otherActions={user.isLoggedIn ? signedInActions : signedOutActions} />
       <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton color="inherit" onClick={toggleDrawer}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-            KatieMae's Recipe Book
+            Recipe Book
           </Typography>
+          {!user.isLoggedIn ? null : (
+            <Typography variant="h6" color="inherit">
+              Hello, {user.info.firstName}!
+            </Typography>
+          )}
         </Toolbar>
       </AppBar>
     </React.Fragment>

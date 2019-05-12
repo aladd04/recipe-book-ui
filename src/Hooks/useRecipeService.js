@@ -1,7 +1,25 @@
-import { useAxiosApi } from "../Hooks/useAxiosApi";
+import { useUser } from "./useUser";
+import { createAxiosApi } from "../Helpers/axiosApiHelper";
+import {
+  useState,
+  useEffect
+} from "react";
 
 export function useRecipeService() {
-  const api = useAxiosApi("Recipe");
+  const user = useUser();
+  const [recipeService, setRecipeService] = useState(() => {
+    return createRecipeService(user);
+  });
+
+  useEffect(() => {
+    setRecipeService(createRecipeService(user));
+  }, [user]);
+
+  return recipeService;
+}
+
+function createRecipeService(user) {
+  const api = createAxiosApi("Recipe", user);
 
   function getAllRecipes(handleResponse, handleError) {
     api.get("/")

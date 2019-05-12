@@ -1,7 +1,5 @@
-import RecipeViewModal from "./RecipeViewModal";
-import React, {
-  useState
-} from "react";
+import { RouterLink } from "../../../Shared/RouterLink";
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -12,16 +10,6 @@ import {
 } from "@material-ui/core";
 
 export function RecipeGridCard({ recipe }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function handleSeeMoreClick() {
-    setIsModalOpen(true);
-  }
-
-  function handleModalClose() {
-    setIsModalOpen(false);
-  }
-
   const dateString = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
     year: "numeric",
@@ -44,15 +32,13 @@ export function RecipeGridCard({ recipe }) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={handleSeeMoreClick}>
-            See More
-          </Button>
+          <RouterLink to={`/recipe/${recipe.id}`}>
+            <Button size="small" color="primary">
+              See More
+            </Button>
+          </RouterLink>
         </CardActions>
       </Card>
-      <RecipeViewModal
-        recipe={recipe}
-        isModalOpen={isModalOpen}
-        onCloseModal={handleModalClose} />
     </React.Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import { useAuthService } from "../../Hooks/useAuthService";
+import { useUserContext } from "../../Hooks/useUserContext";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import React, {
   useState,
@@ -7,14 +7,14 @@ import React, {
 import { Redirect } from "react-router-dom";
 
 export function Logout() {
-  const authService = useAuthService();
   const [isLoading, setIsLoading] = useState(true);
+  const userContext = useUserContext();
 
   useEffect(() => {
     setIsLoading(true);
-    authService.logout();
+    userContext.logout();
     setIsLoading(false);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <LoadingWrapper isLoading={isLoading}>
