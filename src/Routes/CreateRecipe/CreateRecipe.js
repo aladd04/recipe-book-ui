@@ -1,4 +1,4 @@
-import recipeService from "../../Services/recipeService";
+import { useRecipeService } from "../../Hooks/useRecipeService";
 import { RecipeSavedSnackbar } from "./Components/RecipeSavedSnackbar";
 import { RecipeForm } from "./Components/RecipeForm";
 import React, {
@@ -6,6 +6,7 @@ import React, {
 } from "react";
 
 export function CreateRecipe() {
+  const recipeService = useRecipeService();
   const [recipe, setRecipe] = useState(setInitialRecipe());
   const [toastOpen, setToastOpen] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);

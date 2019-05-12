@@ -3,10 +3,11 @@ import { DateTime } from "luxon";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
-function createAuthHelper() {
+function createUserTokenHelper() {
   function setUserToken(token) {
     const decodedToken = jwt.decode(token);
     const expireDate = DateTime.fromMillis(decodedToken.exp * 1000);
+
     Cookies.set(AuthTokenKey, token, { expires: expireDate.toJSDate() });
   }
 
@@ -14,7 +15,7 @@ function createAuthHelper() {
     Cookies.remove(AuthTokenKey);
   }
 
-  function getCurrentUser() {
+  function getUserFromToken() {
     const token = Cookies.get(AuthTokenKey);
     const user = {
       isLoggedIn: !!token,
@@ -39,9 +40,9 @@ function createAuthHelper() {
   return {
     setUserToken,
     removeUserToken,
-    getCurrentUser
+    getUserFromToken
   };
 }
 
-const authHelper = createAuthHelper();
-export default authHelper;
+const userTokenHelper = createUserTokenHelper();
+export default userTokenHelper;
