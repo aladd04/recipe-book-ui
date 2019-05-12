@@ -1,4 +1,3 @@
-import authService from "../../Services/authService";
 import { useUserContext } from "../../Hooks/useUserContext";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import React, {
@@ -13,10 +12,9 @@ export function Logout() {
 
   useEffect(() => {
     setIsLoading(true);
-    authService.logout();
-    userContext.resetFromCache();
+    userContext.logout();
     setIsLoading(false);
-  }, [userContext]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <LoadingWrapper isLoading={isLoading}>

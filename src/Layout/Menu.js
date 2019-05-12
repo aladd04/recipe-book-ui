@@ -1,8 +1,7 @@
-import { UserContext } from "../Contexts/UserContext";
+import { useUser } from "../Hooks/useUser";
 import { NavigationDrawer } from "./NavigationDrawer";
 import React, {
-  useState,
-  useContext
+  useState
 } from "react";
 import {
   AppBar,
@@ -17,8 +16,8 @@ import ArrowForward from "@material-ui/icons/ArrowForward";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 
 export function Menu() {
-  const [user] = useContext(UserContext);
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const user = useUser();
 
   const alwaysActions = [{
     text: "Recipes",

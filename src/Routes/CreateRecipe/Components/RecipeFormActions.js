@@ -1,11 +1,10 @@
-import { useUserContext } from "../../../Hooks/useUserContext";
+import { useUser } from "../../../Hooks/useUser";
 import { PaperActions } from "../../../Shared/PaperActions";
 import React from "react";
 import { Button } from "@material-ui/core";
 
 export function RecipeFormActions(props) {
-  const userContext = useUserContext();
-  const user = userContext.value;
+  const user = useUser();
 
   return (
     <PaperActions

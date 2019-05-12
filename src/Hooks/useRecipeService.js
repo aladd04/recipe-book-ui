@@ -1,39 +1,52 @@
+import { useUser } from "./useUser";
 import { createAxiosApi } from "../Helpers/axiosApiHelper";
+import {
+  useState,
+  useEffect
+} from "react";
 
-function createRecipeService() {
-  const resource = "Recipe";
+export function useRecipeService() {
+  const user = useUser();
+  const [recipeService, setRecipeService] = useState(() => {
+    return createRecipeService(user);
+  });
+
+  useEffect(() => {
+    setRecipeService(createRecipeService(user));
+  }, [user]);
+
+  return recipeService;
+}
+
+function createRecipeService(user) {
+  const api = createAxiosApi("Recipe", user);
 
   function getAllRecipes(handleResponse, handleError) {
-    createAxiosApi(resource)
-      .get("/")
+    api.get("/")
       .then(handleResponse)
       .catch(handleError);
   }
 
   function getRecipeById(id, handleResponse, handleError) {
-    createAxiosApi(resource)
-      .get(`/${id}`)
+    api.get(`/${id}`)
       .then(handleResponse)
       .catch(handleError);
   }
 
   function createRecipe(recipe, handleResponse, handleError) {
-    createAxiosApi(resource)
-      .post("/", recipe)
+    api.post("/", recipe)
       .then(handleResponse)
       .catch(handleError);
   }
 
   function updateRecipe(id, recipe, handleResponse, handleError) {
-    createAxiosApi(resource)
-      .put(`/${id}`, recipe)
+    api.put(`/${id}`, recipe)
       .then(handleResponse)
       .catch(handleError);
   }
 
   function deleteRecipe(id, handleResponse, handleError) {
-    createAxiosApi(resource)
-      .delete(`/${id}`)
+    api.delete(`/${id}`)
       .then(handleResponse)
       .catch(handleError)
   }
@@ -46,6 +59,3 @@ function createRecipeService() {
     deleteRecipe
   };
 }
-
-const recipeService = createRecipeService();
-export default recipeService;

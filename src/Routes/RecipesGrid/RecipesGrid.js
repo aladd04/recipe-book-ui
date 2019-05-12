@@ -1,4 +1,4 @@
-import recipeService from "../../Services/recipeService";
+import { useRecipeService } from "../../Hooks/useRecipeService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { PageHeader } from "../../Shared/PageHeader";
 import { FilterableRecipesGrid } from "./Components/FilterableRecipesGrid";
@@ -8,6 +8,7 @@ import React, {
 } from "react";
 
 export function RecipesGrid(props) {
+  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [allRecipes, setAllRecipes] = useState([]);
 
@@ -17,7 +18,7 @@ export function RecipesGrid(props) {
       setAllRecipes(response.data);
       setIsLoading(false);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function createRecipe() {
     props.history.push("/recipe/create");

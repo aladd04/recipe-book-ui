@@ -1,4 +1,4 @@
-import recipeService from "../../Services/recipeService";
+import { useRecipeService } from "../../Hooks/useRecipeService";
 import { PageHeader } from "../../Shared/PageHeader";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { RecipeInfo } from "./Components/RecipeInfo";
@@ -11,6 +11,7 @@ import React, {
 import { Paper } from "@material-ui/core";
 
 export function RecipeView(props) {
+  const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [recipe, setRecipe] = useState({ name: "" });
   const [ownerBlurb, setOwnerBlurb] = useState("");
@@ -26,7 +27,7 @@ export function RecipeView(props) {
         props.history.push("/notfound");
       }
     });
-  }, [props.match.params.id, props.history]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function confirmDeleteRequest() {
     setIsModalOpen(true);

@@ -1,5 +1,4 @@
 import { GoogleClientId } from "../../config";
-import authService from "../../Services/authService";
 import { useUserContext } from "../../Hooks/useUserContext";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import React, {
@@ -20,10 +19,9 @@ export function Login(props) {
   
   function handleGoogleSuccessResponse(response) {
     setIsLoading(true);
-    authService.login(response.tokenId, (isSuccess) => {
+    userContext.login(response.tokenId, (isSuccess) => {
       setIsLoading(false);
       if (isSuccess) {
-        userContext.resetFromCache();
         props.history.push("/");
       }
     });
