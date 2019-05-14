@@ -1,4 +1,4 @@
-import { useUser } from "../Hooks/useUser";
+import { useUserContext } from "../Hooks/useUserContext";
 import { NavigationDrawer } from "./NavigationDrawer";
 import React, {
   useState
@@ -17,7 +17,7 @@ import ArrowBack from "@material-ui/icons/ArrowBack";
 
 export function Menu() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const user = useUser();
+  const user = useUserContext();
 
   const alwaysActions = [{
     text: "Recipes",
@@ -63,7 +63,7 @@ export function Menu() {
           </Typography>
           {!user.isLoggedIn ? null : (
             <Typography variant="h6" color="inherit">
-              Hello, {user.info.firstName}!
+              Hello, {user.firstName}!
             </Typography>
           )}
         </Toolbar>
