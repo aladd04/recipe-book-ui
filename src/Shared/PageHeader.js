@@ -1,3 +1,4 @@
+import { useUserContext } from "../Hooks/useUserContext";
 import React from "react";
 import {
   Typography,
@@ -6,6 +7,8 @@ import {
 } from "@material-ui/core";
 
 export function PageHeader(props) {
+  const user = useUserContext();
+
   return (
     <div className="rb-page-header-container">
       <div className="rb-page-header-primary">
@@ -13,7 +16,10 @@ export function PageHeader(props) {
           {props.text}
         </Typography>
         {!!props.actionClick ? (
-          <Button color="primary" onClick={props.actionClick}>
+          <Button
+            color="primary"
+            onClick={props.actionClick}
+            disabled={!user.isLoggedIn}>
             {props.actionText}
           </Button>
         ) : (null)}

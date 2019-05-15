@@ -10,26 +10,6 @@ export const UserContext = React.createContext([{}, () => {}]);
 export function UserContextProvider(props) {
   const [user, setUser] = useState(() => getUserFromCookie());
 
-  function getUserFromCookie() {
-    const token = Cookies.get(AuthTokenKey);
-    const userInfo = {
-      isLoggedIn: !!token
-    };
-
-    if (userInfo.isLoggedIn) {
-      const decodedToken = jwt.decode(token);
-      
-      userInfo.id = decodedToken.Id;
-      userInfo.email = decodedToken.EmailAddress;
-      userInfo.firstName = decodedToken.FirstName;
-      userInfo.lastName = decodedToken.LastName;
-      userInfo.isAdmin = decodedToken.IsAdmin;
-      userInfo.authToken = token;
-    }
-
-    return userInfo;
-  }
-
   function refetchUser() {
     setUser(getUserFromCookie());
   }
@@ -39,4 +19,24 @@ export function UserContextProvider(props) {
       {props.children}
     </UserContext.Provider>
   );
+}
+
+function getUserFromCookie() {
+  const token = Cookies.get(AuthTokenKey);
+  const userInfo = {
+    isLoggedIn: !!token
+  };
+
+  if (userInfo.isLoggedIn) {
+    const decodedToken = jwt.decode(token);
+    
+    userInfo.id = decodedToken.Id;
+    userInfo.email = decodedToken.EmailAddress;
+    userInfo.firstName = decodedToken.FirstName;
+    userInfo.lastName = decodedToken.LastName;
+    userInfo.isAdmin = decodedToken.IsAdmin;
+    userInfo.authToken = token;
+  }
+
+  return userInfo;
 }

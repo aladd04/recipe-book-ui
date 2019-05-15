@@ -9,13 +9,6 @@ import jwt from "jsonwebtoken";
 export function useUserContext() {
   const [user, refetchUser] = useContext(UserContext);
 
-  function setUserToken(token) {
-    const decodedToken = jwt.decode(token);
-    const expireDate = DateTime.fromMillis(decodedToken.exp * 1000);
-    
-    Cookies.set(AuthTokenKey, token, { expires: expireDate.toJSDate() });
-  }
-
   function login(newAuthToken, handleResponse) {
     const body = {
       token: newAuthToken
@@ -41,7 +34,7 @@ export function useUserContext() {
   }
 
   function logout() {
-    Cookies.remove(AuthTokenKey);
+    removeUserToken();
     refetchUser();
   }
 
@@ -50,4 +43,15 @@ export function useUserContext() {
     logout,
     ...user
   };
+}
+
+function setUserToken(token) {
+  const decodedToken = jwt.decode(token);
+  const expireDate = DateTime.fromMillis(decodedToken.exp * 1000);
+  
+  Cookies.set(AuthTokenKey, token, { expires: expireDate.toJSDate() });
+}
+
+function removeUserToken() {
+  Cookies.remove(AuthTokenKey);
 }
