@@ -37,26 +37,6 @@ export function useRecipeForm(initialRecipe) {
     resetCallback();
   }, [resetCallback]);
 
-  function getBlankErrors() {
-    return {
-      name: {
-        isDirty: false,
-        isValid: true,
-        message: "Name is required"
-      },
-      ingredients: {
-        isDirty: false,
-        isValid: true,
-        message: "Ingredients are required"
-      },
-      instructions: {
-        isDirty: false,
-        isValid: true,
-        message: "Instructions are required"
-      }
-    };
-  }
-
   function markFieldDirty(field) {
     const updatingErrors = Object.assign({}, errors);
     updatingErrors[field].isDirty = true;
@@ -96,5 +76,25 @@ export function useRecipeForm(initialRecipe) {
     handleDescriptionChange,
     handleIngredientsChange,
     handleInstructionsChange
+  };
+}
+
+function getBlankErrors() {
+  return {
+    name: {
+      isDirty: false,
+      isValid: true,
+      message: "Name is required"
+    },
+    ingredients: {
+      isDirty: false,
+      isValid: true,
+      message: "Ingredients are required"
+    },
+    instructions: {
+      isDirty: false,
+      isValid: true,
+      message: "Instructions are required"
+    }
   };
 }

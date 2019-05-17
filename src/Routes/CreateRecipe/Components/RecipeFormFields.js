@@ -17,7 +17,7 @@ export function RecipeFormFields(props) {
       <TextField
         fullWidth
         multiline
-        value={props.recipe.description}
+        value={props.recipe.description || ""}
         onChange={props.onDescriptionChange}
         label="Description"
         placeholder=""

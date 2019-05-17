@@ -12,15 +12,6 @@ export function CreateRecipe() {
   const [isExecuting, setIsExecuting] = useState(false);
   const [newRecipeId, setNewRecipeId] = useState("");
 
-  function setInitialRecipe() {
-    return {
-      name: "",
-      description: "",
-      ingredients: "",
-      instructions: ""
-    };
-  }
-
   function onToastClose() {
     setToastOpen(false);
     setNewRecipeId("");
@@ -61,4 +52,13 @@ export function CreateRecipe() {
         recipeId={newRecipeId} />
     </React.Fragment>
   );
+}
+
+function setInitialRecipe() {
+  return {
+    name: "",
+    description: "",
+    ingredients: "",
+    instructions: ""
+  };
 }

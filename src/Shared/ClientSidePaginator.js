@@ -36,13 +36,13 @@ export function ClientSidePaginator(props) {
         </span>
       </Typography>
       <Tooltip title="Next Page" placement="left">
-      <div className={nextButtonDisabled ? "not-allowed" : ""}>
-        <IconButton
-          onClick={props.incrementPageNumber}
-          disabled={nextButtonDisabled}>
-          <ArrowForwardIcon />
-        </IconButton>
-      </div>
+        <div className={nextButtonDisabled ? "not-allowed" : ""}>
+          <IconButton
+            onClick={props.incrementPageNumber}
+            disabled={nextButtonDisabled}>
+            <ArrowForwardIcon />
+          </IconButton>
+        </div>
       </Tooltip>
     </div>
   );

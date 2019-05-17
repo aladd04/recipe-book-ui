@@ -1,4 +1,4 @@
-import { useUser } from "./useUser";
+import { useUserContext } from "./useUserContext";
 import { createAxiosApi } from "../Helpers/axiosApiHelper";
 import {
   useState,
@@ -6,14 +6,14 @@ import {
 } from "react";
 
 export function useRecipeService() {
-  const user = useUser();
+  const user = useUserContext();
   const [recipeService, setRecipeService] = useState(() => {
     return createRecipeService(user);
   });
 
   useEffect(() => {
     setRecipeService(createRecipeService(user));
-  }, [user]);
+  }, [user.authToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return recipeService;
 }

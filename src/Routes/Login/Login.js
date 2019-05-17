@@ -15,11 +15,11 @@ import { GoogleLogin } from "react-google-login";
 
 export function Login(props) {
   const [isLoading, setIsLoading] = useState(false);
-  const userContext = useUserContext();
+  const user = useUserContext();
   
   function handleGoogleSuccessResponse(response) {
     setIsLoading(true);
-    userContext.login(response.tokenId, (isSuccess) => {
+    user.login(response.tokenId, (isSuccess) => {
       setIsLoading(false);
       if (isSuccess) {
         props.history.push("/");

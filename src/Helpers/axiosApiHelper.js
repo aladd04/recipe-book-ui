@@ -7,7 +7,7 @@ export function createAxiosApi(resource, user) {
   });
 
   if (user.isLoggedIn) {
-    const bearerAuthToken = `Bearer ${user.info.authToken}`;
+    const bearerAuthToken = `Bearer ${user.authToken}`;
     
     api.defaults.withCredentials = true;
     api.defaults.headers.common["Authorization"] = bearerAuthToken;

@@ -41,18 +41,22 @@ export function PageableRecipesGrid({ recipes }) {
   function goToPreviousPage() {
     dispatch({ type: actionType.previousPage });
   }
-    
+
+  const paginatorHtml = (
+    <ClientSidePaginator
+      decrementPageNumber={goToPreviousPage}
+      displayStartNumber={state.displayStartNumber}
+      displayEndNumber={state.displayEndNumber}
+      dataCount={state.data.length}
+      currentPageNumber={state.pageNumber}
+      maxPageNumber={state.maxPageNumber}
+      incrementPageNumber={goToNextPage} />
+  );
+
   return (
     <React.Fragment>
       <Grid item xs={12}>
-        <ClientSidePaginator
-          decrementPageNumber={goToPreviousPage}
-          displayStartNumber={state.displayStartNumber}
-          displayEndNumber={state.displayEndNumber}
-          dataCount={state.data.length}
-          currentPageNumber={state.pageNumber}
-          maxPageNumber={state.maxPageNumber}
-          incrementPageNumber={goToNextPage} />
+        {paginatorHtml}
       </Grid>
       {recipes.length > 0 ? state.dataToDisplay.map(r => (
         <Grid item md={4} sm={6} xs={12} key={r.id}>
@@ -67,14 +71,7 @@ export function PageableRecipesGrid({ recipes }) {
         </Grid>
       )}
       <Grid item xs={12}>
-        <ClientSidePaginator
-          decrementPageNumber={goToPreviousPage}
-          displayStartNumber={state.displayStartNumber}
-          displayEndNumber={state.displayEndNumber}
-          dataCount={state.data.length}
-          currentPageNumber={state.pageNumber}
-          maxPageNumber={state.maxPageNumber}
-          incrementPageNumber={goToNextPage} />
+        {paginatorHtml}
       </Grid>
     </React.Fragment>
   );

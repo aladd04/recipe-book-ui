@@ -33,15 +33,6 @@ export function FilterableRecipesGrid(props) {
     setNameQuery(newNameQuery);
   }
 
-  function sortRecipesByName(recipes) {
-    recipes.sort((a, b) => {
-      var nameA = a.name.toLowerCase();
-      var nameB = b.name.toLowerCase();
-
-      return (nameA < nameB ? -1 : (nameA > nameB ? 1 : 0));
-    });
-  }
-
   return (
     <Grid container spacing={24}>
       <Grid item xs={12}>
@@ -54,4 +45,13 @@ export function FilterableRecipesGrid(props) {
       <PageableRecipesGrid recipes={matchingRecipes} />
     </Grid>
   );
+}
+
+function sortRecipesByName(recipes) {
+  recipes.sort((a, b) => {
+    var nameA = a.name.toLowerCase();
+    var nameB = b.name.toLowerCase();
+
+    return (nameA < nameB ? -1 : (nameA > nameB ? 1 : 0));
+  });
 }

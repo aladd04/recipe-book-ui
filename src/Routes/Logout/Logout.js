@@ -8,11 +8,11 @@ import { Redirect } from "react-router-dom";
 
 export function Logout() {
   const [isLoading, setIsLoading] = useState(true);
-  const userContext = useUserContext();
+  const user = useUserContext();
 
   useEffect(() => {
     setIsLoading(true);
-    userContext.logout();
+    user.logout();
     setIsLoading(false);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
