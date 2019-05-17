@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
 
 export function useUserContext() {
-  const [user, refetchUser] = useContext(UserContext);
+  const [user, triggerResetUserFromToken] = useContext(UserContext);
 
   function login(newAuthToken, handleResponse) {
     const body = {
@@ -19,7 +19,7 @@ export function useUserContext() {
       .then((response) => {
         if (response && response.status === 200 && response.data.token) {
           setUserToken(response.data.token);
-          refetchUser();
+          triggerResetUserFromToken();
           handleResponse(true);
         } else {
           logout();
@@ -27,7 +27,7 @@ export function useUserContext() {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
         logout();
         handleResponse(false);
       });
@@ -35,12 +35,13 @@ export function useUserContext() {
 
   function logout() {
     removeUserToken();
-    refetchUser();
+    triggerResetUserFromToken();
   }
 
   return {
     login,
     logout,
+    triggerResetUserFromToken,
     ...user
   };
 }

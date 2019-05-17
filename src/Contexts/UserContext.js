@@ -8,20 +8,20 @@ import jwt from "jsonwebtoken";
 export const UserContext = React.createContext([{}, () => {}]);
 
 export function UserContextProvider(props) {
-  const [user, setUser] = useState(() => getUserFromCookie());
+  const [user, setUser] = useState(() => getUserFromToken());
 
-  function refetchUser() {
-    setUser(getUserFromCookie());
+  function triggerResetUserFromToken() {
+    setUser(getUserFromToken());
   }
 
   return (
-    <UserContext.Provider value={[user, refetchUser]}>
+    <UserContext.Provider value={[user, triggerResetUserFromToken]}>
       {props.children}
     </UserContext.Provider>
   );
 }
 
-function getUserFromCookie() {
+function getUserFromToken() {
   const token = Cookies.get(AuthTokenKey);
   const userInfo = {
     isLoggedIn: !!token
