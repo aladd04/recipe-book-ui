@@ -8,17 +8,10 @@ import {
   Button,
   Typography
 } from "@material-ui/core";
+import { DateTime } from "luxon";
 
 export function RecipeGridCard({ recipe }) {
-  const dateString = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: "true"
-  }).format(new Date(recipe.updateDate));
+  const dateString = DateTime.fromISO(recipe.updateDate).toFormat("fff");
 
   return (
     <React.Fragment>

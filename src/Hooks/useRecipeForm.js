@@ -9,7 +9,7 @@ export function useRecipeForm(initialRecipe) {
   const [errors, setErrors] = useState(() => getBlankErrors());
 
   const validateCallback = useCallback((markAllDirty) => {
-    const foundErrors = Object.assign({}, errors);
+    const foundErrors = JSON.parse(JSON.stringify(errors));
     Object.keys(foundErrors).forEach(k => {
       if (markAllDirty) {
         foundErrors[k].isDirty = true;
@@ -20,7 +20,10 @@ export function useRecipeForm(initialRecipe) {
       }
     });
 
-    setErrors(foundErrors);
+    if (JSON.stringify(errors) !== JSON.stringify(foundErrors)) {
+      setErrors(foundErrors);
+    }
+
     return Object.keys(foundErrors).every(k => foundErrors[k].isValid);
   }, [recipe, errors]);
 
@@ -38,7 +41,7 @@ export function useRecipeForm(initialRecipe) {
   }, [resetCallback]);
 
   function markFieldDirty(field) {
-    const updatingErrors = Object.assign({}, errors);
+    const updatingErrors = JSON.parse(JSON.stringify(errors));
     updatingErrors[field].isDirty = true;
 
     setErrors(updatingErrors);
