@@ -1,5 +1,6 @@
 import { RecipeInfoSection } from "./RecipeInfoSection";
 import React from "react";
+import { DateTime } from "luxon";
 
 export function RecipeInfo({ recipe, ...props }) {
   props.setOwnerBlurb(generateOwnerBlurb(recipe.ownerName, recipe.updateDate));
@@ -20,22 +21,12 @@ export function RecipeInfo({ recipe, ...props }) {
 }
 
 function generateOwnerBlurb(ownerName, updateDate) {
-  const dateString = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    weekday: "long"
-  }).format(new Date(updateDate));
+  const isoDateTime = DateTime.fromISO(updateDate);
+  
+  const formattedDate = isoDateTime.toFormat("DDDD");
+  const formattedTime = isoDateTime.toFormat("t ZZZZ");
 
-  const timeString = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/New_York",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: "true"
-  }).format(new Date(updateDate));
-
-  const dateTimeString = `${dateString} at ${timeString}`;
+  const dateTimeString = `${formattedDate} at ${formattedTime}`;
 
   return `${ownerName} last updated this recipe on ${dateTimeString}`;
 }
