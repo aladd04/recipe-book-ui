@@ -1,3 +1,4 @@
+import { SiteMessageContext } from "../../Contexts/SiteMessageContext";
 import { useRecipeService } from "../../Hooks/useRecipeService";
 import { PageHeader } from "../../Shared/PageHeader";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
@@ -6,11 +7,13 @@ import { RecipeViewActions } from "./Components/RecipeViewActions";
 import YesNoModal from "../../Shared/YesNoModal";
 import React, {
   useState,
-  useEffect
+  useEffect,
+  useContext
 } from "react";
 import { Paper } from "@material-ui/core";
 
 export function RecipeView(props) {
+  const [, setSiteMessage] = useContext(SiteMessageContext);
   const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
   const [recipe, setRecipe] = useState({ name: "" });
@@ -19,6 +22,11 @@ export function RecipeView(props) {
 
   useEffect(() => {
     setIsLoading(true);
+
+    if (props.location.state && props.location.state.alertMessage) {
+      setSiteMessage(props.location.state.alertMessage);
+    }
+
     recipeService.getRecipeById(props.match.params.id, (response) => {
       setRecipe(response.data);
       setIsLoading(false);
@@ -45,7 +53,9 @@ export function RecipeView(props) {
     setIsModalOpen(false);
     recipeService.deleteRecipe(recipe.id, (response) => {
       if (response && response.status === 200) {
-        props.history.push("/");
+        props.history.push("/", { 
+          alertMessage: "Recipe Deleted!"
+        });
       } else {
         console.log(response);
       }

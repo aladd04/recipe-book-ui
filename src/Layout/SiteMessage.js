@@ -1,5 +1,9 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { SiteMessageContext } from "../Contexts/SiteMessageContext";
+import React, {
+  useState,
+  useContext,
+  useEffect
+} from "react";
 import {
   Snackbar,
   SnackbarContent
@@ -9,42 +13,47 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import green from "@material-ui/core/colors/green";
 
-export function RecipeSavedSnackbar(props) {
+export function SiteMessage() {
+  const [message, setMessage] = useContext(SiteMessageContext);
+  const [toastOpen, setToastOpen] = useState(false);
+
+  useEffect(() => {
+    setToastOpen(!!message);
+  }, [message]);
+
+  function onToastClose() {
+    setMessage("");
+  }
+
   return (
     <Snackbar
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      open={props.toastOpen}
+      open={toastOpen}
       autoHideDuration={8000}
-      onClose={props.onToastClose}
+      onClose={onToastClose}
       style={{ marginTop: 20 }}>
       <SnackbarContent
         style={{ backgroundColor: green[600] }}
         message={
-          <RecipeSavedSnackbarContentMessage recipeId={props.recipeId} />
+          <SnackbarContentMessage message={message} />
         }
         action={
-          <RecipeSavedSnackbarContentAction onToastClose={props.onToastClose} />
+          <SnackbarContentActions onToastClose={onToastClose} />
         } />
     </Snackbar>
   );
 }
 
-function RecipeSavedSnackbarContentMessage(props) {
+function SnackbarContentMessage(props) {
   return (
     <div className="rb-snackbar-message">
       <CheckCircleIcon />
-      <span style={{ paddingLeft: 10 }}>Recipe saved!</span>
-      <Link
-        to={`/recipe/${props.recipeId}`}
-        style={{ padding: "0 4px" }}>
-        Click here
-      </Link>
-      <span>to view it</span>
+      <span style={{ paddingLeft: 10 }}>{props.message}</span>
     </div>
   );
 }
 
-function RecipeSavedSnackbarContentAction(props) {
+function SnackbarContentActions(props) {
   return (
     <IconButton onClick={props.onToastClose}>
       <CloseIcon />
