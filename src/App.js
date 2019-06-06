@@ -1,5 +1,4 @@
 import { UserContextProvider } from "./Contexts/UserContext";
-import { SiteMessageContextProvider } from "./Contexts/SiteMessageContext";
 import { Menu } from "./Layout/Menu";
 import { Footer } from "./Layout/Footer";
 import { RecipesGrid } from "./Routes/RecipesGrid/RecipesGrid";
@@ -18,7 +17,6 @@ import {
 } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "./Content/site.scss";
-import { SiteMessage } from "./Layout/SiteMessage";
 
 export default function App() {
   return (
@@ -26,20 +24,17 @@ export default function App() {
       <CssBaseline />
       <UserContextProvider>
         <Menu />
-        <SiteMessageContextProvider>
-          <SiteMessage />
-          <main id="main-content">
-            <Switch>
-              <Route exact path="/" component={RecipesGrid} />
-              <Route exact path="/recipe/create" component={CreateRecipe} />
-              <Route exact path="/recipe/:id" component={RecipeView} />
-              <Route exact path="/recipe/:id/edit" component={EditRecipe} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/logout" component={Logout} />
-              <Route component={RouteNotFound} />
-            </Switch>
-          </main>
-        </SiteMessageContextProvider>
+        <main id="main-content">
+          <Switch>
+            <Route exact path="/" component={RecipesGrid} />
+            <Route exact path="/recipe/create" component={CreateRecipe} />
+            <Route exact path="/recipe/:id" component={RecipeView} />
+            <Route exact path="/recipe/:id/edit" component={EditRecipe} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
+            <Route component={RouteNotFound} />
+          </Switch>
+        </main>
         <Footer />
       </UserContextProvider>
     </BrowserRouter>

@@ -1,7 +1,5 @@
-import { SiteMessageContext } from "../Contexts/SiteMessageContext";
 import React, {
   useState,
-  useContext,
   useEffect
 } from "react";
 import {
@@ -13,16 +11,15 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import green from "@material-ui/core/colors/green";
 
-export function SiteMessage() {
-  const [message, setMessage] = useContext(SiteMessageContext);
+export function SuccessMessage(props) {
   const [toastOpen, setToastOpen] = useState(false);
 
   useEffect(() => {
-    setToastOpen(!!message);
-  }, [message]);
+    setToastOpen(!!props.message);
+  }, [props.message]);
 
   function onToastClose() {
-    setMessage("");
+    props.clearMessage();
   }
 
   return (
@@ -35,7 +32,7 @@ export function SiteMessage() {
       <SnackbarContent
         style={{ backgroundColor: green[600] }}
         message={
-          <SnackbarContentMessage message={message} />
+          <SnackbarContentMessage message={props.message} />
         }
         action={
           <SnackbarContentActions onToastClose={onToastClose} />

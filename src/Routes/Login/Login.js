@@ -22,7 +22,9 @@ export function Login(props) {
     user.login(response.tokenId, (isSuccess) => {
       setIsLoading(false);
       if (isSuccess) {
-        props.history.push("/");
+        props.history.push("/", { 
+          alertMessage: "Logged in!"
+        });
       }
     });
   }
