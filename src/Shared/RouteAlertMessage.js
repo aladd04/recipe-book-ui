@@ -9,8 +9,12 @@ export function RouteAlertMessage(props) {
   }
 
   return (
-    <SuccessMessage
-      message={props.location.state.alertMessage}
-      clearMessage={clearAlertMessage} />
+    <React.Fragment>
+      {props.location && props.location.state ? (
+        <SuccessMessage
+          message={props.location.state.alertMessage}
+          clearMessage={clearAlertMessage} />
+      ) : (null)}
+    </React.Fragment>
   );
 }
