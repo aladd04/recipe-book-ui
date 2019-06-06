@@ -3,6 +3,7 @@ import { PageHeader } from "../../Shared/PageHeader";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { RecipeInfo } from "./Components/RecipeInfo";
 import { RecipeViewActions } from "./Components/RecipeViewActions";
+import { RouteAlertMessage } from "../../Shared/RouteAlertMessage";
 import YesNoModal from "../../Shared/YesNoModal";
 import React, {
   useState,
@@ -45,7 +46,9 @@ export function RecipeView(props) {
     setIsModalOpen(false);
     recipeService.deleteRecipe(recipe.id, (response) => {
       if (response && response.status === 200) {
-        props.history.push("/");
+        props.history.push("/", { 
+          alertMessage: "Recipe Deleted!"
+        });
       } else {
         console.log(response);
       }
@@ -62,6 +65,7 @@ export function RecipeView(props) {
 
   return (
     <React.Fragment>
+      <RouteAlertMessage {...props} />
       <PageHeader text={recipe.name} subText={ownerBlurb} />
       <LoadingWrapper isLoading={isLoading}>
         <Paper style={{ padding: 12 }}>

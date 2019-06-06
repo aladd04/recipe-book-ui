@@ -15,7 +15,7 @@ export function PageHeader(props) {
         <Typography variant="h4" color="textSecondary">
           {props.text}
         </Typography>
-        {!!props.actionClick ? (
+        {props.actionClick ? (
           <Button
             color="primary"
             onClick={props.actionClick}
@@ -24,7 +24,7 @@ export function PageHeader(props) {
           </Button>
         ) : (null)}
       </div>
-      {!!props.subText ? (
+      {props.subText ? (
         <Typography variant="subtitle2" color="textSecondary">
           {props.subText}
         </Typography>

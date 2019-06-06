@@ -1,6 +1,7 @@
 import { useRecipeService } from "../../Hooks/useRecipeService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { PageHeader } from "../../Shared/PageHeader";
+import { RouteAlertMessage } from "../../Shared/RouteAlertMessage";
 import { FilterableRecipesGrid } from "./Components/FilterableRecipesGrid";
 import React, {
   useState,
@@ -26,6 +27,7 @@ export function RecipesGrid(props) {
 
   return (
     <React.Fragment>
+      <RouteAlertMessage {...props} />
       <PageHeader
         text="Recipes"
         actionText="Create a new Recipe"

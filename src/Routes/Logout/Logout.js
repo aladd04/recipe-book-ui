@@ -18,7 +18,12 @@ export function Logout() {
 
   return (
     <LoadingWrapper isLoading={isLoading}>
-      <Redirect to="/" />
+      <Redirect to={{
+        pathname: "/",
+        state: {
+          alertMessage: "Logged out!"
+        }
+      }} />
     </LoadingWrapper>
   );
 }

@@ -1,9 +1,6 @@
 import { useRecipeService } from "../../Hooks/useRecipeService";
 import { LoadingWrapper } from "../../Shared/LoadingWrapper";
 import { RecipeForm } from "../CreateRecipe/Components/RecipeForm";
-import { 
-  RecipeSavedSnackbar
-} from "../CreateRecipe/Components/RecipeSavedSnackbar";
 import React, {
   useState,
   useEffect
@@ -12,7 +9,6 @@ import React, {
 export function EditRecipe(props) {
   const recipeService = useRecipeService();
   const [isLoading, setIsLoading] = useState(true);
-  const [toastOpen, setToastOpen] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
   const [recipe, setRecipe] = useState({
     id: "",
@@ -34,21 +30,17 @@ export function EditRecipe(props) {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function onToastClose() {
-    setToastOpen(false);
-  }
-
   function saveRecipe(updatedRecipe) {
     setIsExecuting(true);
     recipeService.updateRecipe(recipe.id, updatedRecipe, (response) => {
       if (response && response.status === 200) {
-        setToastOpen(true);
-        setRecipe(updatedRecipe);
+        props.history.push(`/recipe/${recipe.id}`, { 
+          alertMessage: "Recipe Saved!"
+        });
       } else {
         console.log(response);
+        setIsExecuting(false);
       }
-
-      setIsExecuting(false);
     }, (error) => {
       console.log(error);
       if (error.response) {
@@ -67,10 +59,6 @@ export function EditRecipe(props) {
           recipe={recipe}
           onSaveClick={saveRecipe}
           isSaveExecuting={isExecuting} />
-        <RecipeSavedSnackbar
-          toastOpen={toastOpen}
-          onToastClose={onToastClose}
-          recipeId={recipe.id} />
       </LoadingWrapper>
     </React.Fragment>
   );
